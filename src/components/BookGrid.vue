@@ -13,7 +13,7 @@ const bookInfo = computed(() => {
 </script>
 
 <template>
-  <div class="grid grid-cols-5 gap-4 m-4">
+  <div class="grid grid-cols-4 gap-4 m-4">
     <Card
       class="overflow-hidden hover:shadow-lg transition-shadow duration-300 ease-in-out"
       v-for="book in bookInfo"
