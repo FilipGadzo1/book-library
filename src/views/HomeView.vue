@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import SearchBar from '@/components/SearchBar.vue';
 import BookGrid from '@/components/BookGrid.vue';
 import * as $ from 'jquery';
 
