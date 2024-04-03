@@ -23,3 +23,10 @@
     </div>
   </nav>
 </template>
+
+<style scoped>
+.active {
+  --tw-bg-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-bg-opacity));
+}
+</style>
