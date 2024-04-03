@@ -20,6 +20,7 @@ const router = createRouter({
       component: HomeView,
     },
   ],
+  linkActiveClass: 'active',
 });
 
 export default router;
