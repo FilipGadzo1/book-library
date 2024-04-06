@@ -1,17 +1,13 @@
 <template>
   <nav class="bg-gray-900">
-    <div class="grid grid-cols-6 items-center p-4">
+    <div class="grid grid-cols-3 md:grid-cols-6 items-center p-4">
       <RouterLink to="/" class="flex gap-3">
         <img src="../assets//logo.webp" class="h-8" alt="Bookstore Logo" />
-        <span class="self-center text-2xl font-semibold text-white"
-          >Bookstore</span
-        >
+        <span class="self-center text-2xl font-semibold text-white">Bookstore</span>
       </RouterLink>
       <div class="flex mt-2 font-medium gap-12 col-start-2 col-end-5">
         <RouterLink to="/" class="text-white">Home</RouterLink>
-        <RouterLink to="/about" class="text-white"
-          ><span>About</span></RouterLink
-        >
+        <RouterLink to="/about" class="text-white"><span>About</span></RouterLink>
       </div>
       <div class="flex justify-end mr-5 mt-2 col-start-6">
         <RouterLink to="/shopping-cart">
