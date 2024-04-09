@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import { useCartStore } from '@/stores/cart';
+
+const cartStore = useCartStore();
+const cartList = computed(() => cartStore.cartList.length);
+</script>
+
 <template>
   <nav class="bg-gray-900">
     <div class="grid grid-cols-3 md:grid-cols-6 items-center p-4">
@@ -12,7 +19,7 @@
       <div class="flex justify-end mr-5 mt-2 col-start-6">
         <RouterLink to="/shopping-cart">
           <i class="pi pi-shopping-cart text-white relative">
-            <Badge value="2" severity="info" class="absolute bottom-2 left-3" />
+            <Badge v-if="cartList" :value="cartList" severity="info" class="absolute bottom-2 left-3" />
           </i>
         </RouterLink>
       </div>

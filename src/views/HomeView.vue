@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import BookGrid from '@/components/BookGrid.vue';
-import * as $ from 'jquery';
 
 const onSearchClick = (query: string) => {
   let trimmedQuery = query.trim();
@@ -12,17 +11,9 @@ const onSearchClick = (query: string) => {
 
 const apiUrl = 'https://www.googleapis.com/books/v1/volumes';
 const bookData = ref();
-function searchBooks(query: string) {
-  $.ajax({
-    url: `${apiUrl}?q=${query}&maxResults=40`,
-    type: 'GET',
-    success: function (data) {
-      bookData.value = data.items;
-    },
-    error: function (error) {
-      console.error(error);
-    },
-  });
+async function searchBooks(query: string) {
+  let data = await fetch(`${apiUrl}?q=${query}&maxResults=40`).then((res) => res.json());
+  bookData.value = data.items;
 }
 </script>
 

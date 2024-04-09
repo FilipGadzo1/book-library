@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
-import BookDetails from '@/views/BookDetails.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,12 +17,12 @@ const router = createRouter({
     {
       path: '/shopping-cart',
       name: 'shopping-cart',
-      component: HomeView,
+      component: () => import('@/views/ShoppingCart.vue'),
     },
     {
       path: '/book/:id',
       name: 'book-details',
-      component: () => BookDetails,
+      component: () => import('@/views/BookDetails.vue'),
       props: true,
     },
   ],

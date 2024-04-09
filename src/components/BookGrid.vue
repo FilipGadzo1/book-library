@@ -5,6 +5,8 @@ const props = defineProps<{
   data?: RootObject[];
 }>();
 
+const router = useRouter();
+
 const bookInfo = computed(() => {
   return props.data?.map((book) => {
     return { ...book.volumeInfo, id: book.id, price: Math.floor(Math.random() * 100) + 1 };
@@ -12,8 +14,9 @@ const bookInfo = computed(() => {
 });
 
 const emit = defineEmits(['details']);
-function onDetailsClick(id: string) {
-  emit('details', id);
+function onDetailsClick(id: string, price: number) {
+  router.push({ path: `/book/${id}`, query: { price } });
+  emit('details', id, price);
 }
 </script>
 
@@ -22,7 +25,7 @@ function onDetailsClick(id: string) {
     <div
       v-for="(book, index) in bookInfo"
       :key="index"
-      class="flex flex-cols items-center bg-gray-900 rounded-lg hover:bg-gray-800 shadow text-white transition-colors">
+      class="flex flex-cols items-center bg-gray-900 rounded-lg shadow text-white transition-colors">
       <img
         :src="book.imageLinks ? book.imageLinks.thumbnail : '/public/placeholder.png'"
         :alt="book.title"
@@ -30,14 +33,12 @@ function onDetailsClick(id: string) {
       <div class="p-4 flex flex-col justify-between leading-normal gap-2">
         <p class="text-xl font-bold">{{ book.title }}</p>
         <p class="text-gray-400 italic">Authors: {{ book.authors?.join(', ') }}</p>
-        <p class="">Price: ${{ book.price }}</p>
+        <p>Price: ${{ book.price }}</p>
         <div class="mt-8">
-          <button @click="onDetailsClick(book.id)">
-            <RouterLink
-              :to="{ name: 'book-details', params: { id: book.id } }"
-              class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg"
-              >Details</RouterLink
-            >
+          <button
+            class="bg-blue-600 hover:bg-blue-700 text-sm text-white font-bold py-2 px-2 rounded-lg"
+            @click="onDetailsClick(book.id, book.price)">
+            Details
           </button>
         </div>
       </div>
