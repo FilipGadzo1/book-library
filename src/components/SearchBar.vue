@@ -21,7 +21,7 @@ const emit = defineEmits(['search']);
         v-model="query"
         :unstyled="true"
         class="block w-full p-4 ps-10 text-sm text-gray-200 border border-gray-500 rounded-lg placeholder-gray-400 bg-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
-        placeholder="Search books..."
+        placeholder="Search for books..."
         required />
       <button
         type="submit"

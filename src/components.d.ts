@@ -7,12 +7,12 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Badge: typeof import('primevue/badge')['default']
-    BookGrid: typeof import('./components/BookGrid.vue')['default']
-    Card: typeof import('primevue/card')['default']
-    NavigationBar: typeof import('./components/NavigationBar.vue')['default']
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
-    SearchBar: typeof import('./components/SearchBar.vue')['default']
+    Badge: (typeof import('primevue/badge'))['default'];
+    BookDetail: (typeof import('./components/BookDetail.vue'))['default'];
+    BookGrid: (typeof import('./components/BookGrid.vue'))['default'];
+    NavigationBar: (typeof import('./components/NavigationBar.vue'))['default'];
+    RouterLink: (typeof import('vue-router'))['RouterLink'];
+    RouterView: (typeof import('vue-router'))['RouterView'];
+    SearchBar: (typeof import('./components/SearchBar.vue'))['default'];
   }
 }
