@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { type RootObject } from '@/types';
+import { type BookObject } from '@/types';
 
 const props = defineProps<{
-  data?: RootObject[];
+  data?: BookObject[];
 }>();
 
 const router = useRouter();
@@ -27,7 +27,7 @@ function onDetailsClick(id: string, price: number) {
       :key="index"
       class="flex flex-cols items-center bg-gray-900 rounded-lg shadow text-white transition-colors">
       <img
-        :src="book.imageLinks ? book.imageLinks.thumbnail : '/public/placeholder.png'"
+        :src="book.imageLinks ? book.imageLinks.thumbnail : '/placeholder.png'"
         :alt="book.title"
         class="object-cover w-32 h-full rounded-s-lg" />
       <div class="p-4 flex flex-col justify-between leading-normal gap-2">

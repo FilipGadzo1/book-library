@@ -2,7 +2,7 @@
 import { useCartStore } from '@/stores/cart';
 
 const cartStore = useCartStore();
-const cartList = computed(() => cartStore.cartList.length);
+const numberOfItems = computed(() => cartStore.cartItemsCount);
 </script>
 
 <template>
@@ -12,14 +12,10 @@ const cartList = computed(() => cartStore.cartList.length);
         <img src="../assets//logo.webp" class="h-8" alt="Bookstore Logo" />
         <span class="self-center text-2xl font-semibold text-white">Bookstore</span>
       </RouterLink>
-      <div class="flex mt-2 font-medium gap-12 col-start-2 col-end-5">
-        <RouterLink to="/" class="text-white">Home</RouterLink>
-        <RouterLink to="/about" class="text-white"><span>About</span></RouterLink>
-      </div>
       <div class="flex justify-end mr-5 mt-2 col-start-6">
         <RouterLink to="/shopping-cart">
           <i class="pi pi-shopping-cart text-white relative">
-            <Badge v-if="cartList" :value="cartList" severity="info" class="absolute bottom-2 left-3" />
+            <Badge v-if="numberOfItems" :value="numberOfItems" severity="info" class="absolute bottom-2 left-3" />
           </i>
         </RouterLink>
       </div>

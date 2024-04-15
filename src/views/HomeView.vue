@@ -10,10 +10,13 @@ const onSearchClick = (query: string) => {
 };
 
 const apiUrl = 'https://www.googleapis.com/books/v1/volumes';
-const bookData = ref();
+const bookData = ref([]);
 async function searchBooks(query: string) {
-  let data = await fetch(`${apiUrl}?q=${query}&maxResults=40`).then((res) => res.json());
-  bookData.value = data.items;
+  await fetch(`${apiUrl}?q=${query}&maxResults=40`)
+    .then((res) => res.json())
+    .then((data) => {
+      bookData.value = data.items;
+    });
 }
 </script>
 

@@ -1,4 +1,4 @@
-export interface RootObject {
+export interface BookObject {
   kind: string;
   id: string;
   etag: string;
@@ -6,6 +6,8 @@ export interface RootObject {
   volumeInfo: VolumeInfo;
   saleInfo: SaleInfo;
   accessInfo: AccessInfo;
+  quantity: number;
+  price: number;
 }
 
 export interface AccessInfo {
@@ -61,7 +63,6 @@ export interface VolumeInfo {
   language: string;
   infoLink: string;
   canonicalVolumeLink: string;
-  price: number;
 }
 
 export interface ImageLinks {

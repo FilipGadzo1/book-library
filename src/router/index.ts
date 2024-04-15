@@ -10,19 +10,14 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/about',
-      name: 'about',
-      component: HomeView,
-    },
-    {
       path: '/shopping-cart',
       name: 'shopping-cart',
-      component: () => import('@/views/ShoppingCart.vue'),
+      component: () => import('@/views/ShoppingCartView.vue'),
     },
     {
       path: '/book/:id',
       name: 'book-details',
-      component: () => import('@/views/BookDetails.vue'),
+      component: () => import('@/views/BookDetailsView.vue'),
       props: true,
     },
   ],
