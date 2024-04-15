@@ -12,13 +12,19 @@ export const useCartStore = defineStore('cart', {
   },
 
   actions: {
-    addToCart(book: BookObject) {
-      this.cartList.push(book);
+    addToCart(book: BookObject, quantity: number) {
+      const index = this.cartList.findIndex((item) => item.id === book.id);
+      if (index !== -1) {
+        this.cartList[index].quantity += quantity;
+      } else {
+        if (!book.quantity) book.quantity = 1;
+        this.cartList.push(book);
+      }
     },
     incrementQuantity(book: BookObject) {
       const index = this.cartList.findIndex((item) => item.id === book.id);
       if (index !== -1) {
-        this.cartList[index].quantity += 1;
+        this.cartList[index].quantity++;
       }
     },
     decrementQuantity(book: BookObject) {

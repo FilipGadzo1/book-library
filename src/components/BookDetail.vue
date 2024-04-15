@@ -33,7 +33,10 @@ const addToCart = () => {
     group: 'bc',
     life: 3000,
   });
-  cartStore.addToCart({ ...props.bookData, price: price.value, quantity: quantity.valueAsNumber });
+  cartStore.addToCart(
+    { ...props.bookData, price: price.value, quantity: quantity.valueAsNumber },
+    quantity.valueAsNumber
+  );
 };
 </script>
 
