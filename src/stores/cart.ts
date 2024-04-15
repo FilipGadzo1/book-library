@@ -1,23 +1,38 @@
-import type { VolumeInfo } from '@/types';
+import type { BookObject } from '@/types';
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
-    cartList: [] as { item: Partial<VolumeInfo>; quantity: number }[],
+    cartList: [] as BookObject[],
   }),
 
   getters: {
-    totalItems: (state) => state.cartList.length,
-    booksInCart: (state) => state.cartList.map((item) => item.item),
+    cartItemsCount: (state) => state.cartList.length,
+    getCartItems: (state) => state.cartList.map((item) => item),
+    getTotalPrice: (state) => state.cartList.reduce((acc, item) => acc + item.price * item.quantity, 0),
   },
 
   actions: {
-    addToCart(item: Partial<VolumeInfo>, quantity: number) {
-      for (let i = 0; i < quantity; i++) {
-        this.cartList.push({ item, quantity });
+    addToCart(book: BookObject) {
+      this.cartList.push(book);
+    },
+    incrementQuantity(book: BookObject) {
+      const index = this.cartList.findIndex((item) => item.id === book.id);
+      if (index !== -1) {
+        this.cartList[index].quantity += 1;
       }
     },
-    removeFromCart(index: number) {
-      this.cartList.splice(index, 1);
+    decrementQuantity(book: BookObject) {
+      const index = this.cartList.findIndex((item) => item.id === book.id);
+      if (index !== -1) {
+        this.cartList[index].quantity--;
+      }
+      if (this.cartList[index].quantity <= 0) {
+        this.removeFromCart(book);
+      }
+    },
+    removeFromCart(book: BookObject) {
+      this.cartList = this.cartList.filter((item) => item.id !== book.id);
     },
   },
+  persist: true,
 });

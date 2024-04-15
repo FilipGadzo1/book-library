@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { VolumeInfo } from '@/types';
+import type { BookObject } from '@/types';
 import { useCartStore } from '@/stores/cart';
 import { useToast } from 'primevue/usetoast';
 import Toast from 'primevue/toast';
@@ -9,11 +9,12 @@ const toast = useToast();
 const price = ref(+router.currentRoute.value.query.price!);
 const props = defineProps<{
   id: string;
-  bookData?: VolumeInfo;
+  bookData?: BookObject;
 }>();
 
 const cartStore = useCartStore();
 const addToCart = () => {
+  if (!props.bookData) return;
   const quantity = document.querySelector('input[name="quantity"]') as HTMLInputElement;
   if (quantity.valueAsNumber <= 0 || isNaN(quantity.valueAsNumber)) {
     toast.add({
@@ -32,7 +33,7 @@ const addToCart = () => {
     group: 'bc',
     life: 3000,
   });
-  cartStore.addToCart({ ...props.bookData, price: price.value }, quantity.valueAsNumber);
+  cartStore.addToCart({ ...props.bookData, price: price.value, quantity: quantity.valueAsNumber });
 };
 </script>
 
@@ -40,18 +41,18 @@ const addToCart = () => {
   <div class="grid grid-cols-2 items-center h-[calc(100vh-64px)] text-gray-200">
     <div
       class="justify-self-center flex flex-col gap-4 p-2 rounded-lg border border-gray-500 shadow-2xl shadow-gray-400 bg-gray-700">
-      <img :src="bookData?.imageLinks.thumbnail" :alt="bookData?.title" class="w-72" />
+      <img :src="bookData?.volumeInfo.imageLinks.thumbnail" :alt="bookData?.volumeInfo.title" class="w-72" />
       <p class="text-md font-semibold self-center">Book ID: {{ id }}</p>
     </div>
     <div class="grid grid-cols-2">
       <div class="flex flex-col gap-6">
         <div>
-          <p class="text-3xl font-semibold mb-2">{{ bookData?.title }}</p>
+          <p class="text-3xl font-semibold mb-2">{{ bookData?.volumeInfo.title }}</p>
           <p class="italic text-sm">
-            by: <span class="uppercase font-semibold">{{ bookData?.authors?.join(', ') }}</span>
+            by: <span class="uppercase font-semibold">{{ bookData?.volumeInfo.authors?.join(', ') }}</span>
           </p>
         </div>
-        <div v-html="bookData?.description" class="text-sm" />
+        <div v-html="bookData?.volumeInfo.description" class="text-sm" />
         <div class="flex justify-between">
           <p class="text-lg">Price: ${{ price }}</p>
           <div>
