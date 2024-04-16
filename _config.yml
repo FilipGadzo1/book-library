@@ -1,0 +1,15 @@
+# Site settings
+title: My Book Library
+description: A books library
+
+# Theme settings
+theme: jekyll-theme-minimal
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Build settings
+markdown: kramdown
+permalink: pretty
