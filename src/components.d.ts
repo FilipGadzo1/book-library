@@ -10,6 +10,7 @@ declare module 'vue' {
     Badge: typeof import('primevue/badge')['default']
     BookDetail: typeof import('./components/BookDetail.vue')['default']
     BookGrid: typeof import('./components/BookGrid.vue')['default']
+    CheckoutPage: typeof import('./components/CheckoutPage.vue')['default']
     NavigationBar: typeof import('./components/NavigationBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

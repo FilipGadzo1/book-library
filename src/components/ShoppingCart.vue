@@ -7,6 +7,10 @@ const data = useCartStore();
 function goHome() {
   router.push({ path: '/' });
 }
+
+function goToCheckout() {
+  router.push({ path: '/checkout' });
+}
 </script>
 
 <template>
@@ -64,7 +68,9 @@ function goHome() {
               <p class="text-lg font-semibold">Total:</p>
               <p class="text-lg font-semibold">${{ data.getTotalPrice }}</p>
             </div>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg w-fit">
+            <button
+              class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg w-fit"
+              @click="goToCheckout">
               Checkout
             </button>
           </div>
