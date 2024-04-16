@@ -1,0 +1,1 @@
+<template><CheckoutPage /></template>

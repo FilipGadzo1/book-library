@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('@/views/BookDetailsView.vue'),
       props: true,
     },
+    {
+      path: '/checkout',
+      name: 'checkout',
+      component: () => import('@/views/CheckoutView.vue'),
+    },
   ],
   linkActiveClass: 'active',
 });
