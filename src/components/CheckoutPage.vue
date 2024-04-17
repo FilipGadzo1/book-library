@@ -1,43 +1,44 @@
 <script setup lang="ts">
-const firstName = ref('');
-const lastName = ref('');
-const email = ref('');
-const address = ref('');
-const city = ref('');
-const zip = ref('');
+import { useCartStore } from '@/stores/cart';
+import type CheckoutForm from './CheckoutForm.vue';
 
-function submitForm() {
-  // Handle form submission logic here
-}
+const cart = useCartStore();
+const cartItems = cart.cartList;
+const toatlPrice = cart.getTotalPrice;
 </script>
 
 <template>
-  <div>
-    <h1>Product Checkout</h1>
-    <form @submit="submitForm">
-      <h2>Shipping Information</h2>
-      <label for="firstName">First Name:</label>
-      <input type="text" id="firstName" v-model="firstName" required />
-
-      <label for="lastName">Last Name:</label>
-      <input type="text" id="lastName" v-model="lastName" required />
-
-      <label for="email">Email:</label>
-      <input type="email" id="email" v-model="email" required />
-
-      <label for="address">Address:</label>
-      <input type="text" id="address" v-model="address" required />
-
-      <label for="city">City:</label>
-      <input type="text" id="city" v-model="city" required />
-
-      <label for="zip">ZIP Code:</label>
-      <input type="text" id="zip" v-model="zip" required />
-
-      <button type="submit">Place Order</button>
-    </form>
+  <div class="m-4 h-screen">
+    <div v-if="!cartItems.length" class="text-center text-white">
+      <img src="/empty-cart.webp" alt="Empty Cart" class="mx-auto w-44" />
+      <p class="text-xl font-semibold mb-2">Your cart is empty</p>
+      <p>Looks like you haven't added anything to your cart.</p>
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg m-4">
+        <router-link to="/">Explore books</router-link>
+      </button>
+    </div>
+    <div v-else>
+      <h1 class="ml-12 text-white text-2xl font-bold mb-5">Checkout</h1>
+      <div class="grid grid-cols-2 mx-12">
+        <CheckoutForm />
+        <div class="p-4 rounded-lg border border-gray-800 bg-gray-700 text-white overflow-y">
+          <h2 class="text-lg mb-2 font-bold">Order Summary</h2>
+          <div v-for="item in cartItems" :key="item.id" class="mb-4">
+            <div class="flex gap-6">
+              <img :src="item.volumeInfo.imageLinks.thumbnail" alt="Book Cover" class="h-20 w-12" />
+              <div class="text-sm flex flex-col">
+                <span>{{ item.volumeInfo.title }} ({{ item.quantity }})</span>
+                <span>{{ item.volumeInfo.authors.join(', ') }} </span>
+                <span class="mt-5 font-bold">${{ item.price }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex justify-between mt-4 border-y border-gray-800 py-4">
+            <span>Total</span>
+            <span>${{ toatlPrice }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
-<style scoped>
-/* Add custom styles for the CheckoutPage component */
-</style>

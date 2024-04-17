@@ -22,6 +22,7 @@
     "primeicons": "^6.0.1",
     "primevue": "^3.50.0",
     "unplugin-auto-import": "^0.17.5",
+    "v-mask": "^2.3.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },

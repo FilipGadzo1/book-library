@@ -39,6 +39,9 @@ export const useCartStore = defineStore('cart', {
     removeFromCart(book: BookObject) {
       this.cartList = this.cartList.filter((item) => item.id !== book.id);
     },
+    removeAllItemsFromCart() {
+      this.cartList = [];
+    },
   },
   persist: true,
 });
