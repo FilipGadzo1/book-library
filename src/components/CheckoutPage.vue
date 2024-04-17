@@ -8,7 +8,7 @@ const toatlPrice = cart.getTotalPrice;
 </script>
 
 <template>
-  <div class="m-4 h-screen">
+  <div class="m-4">
     <div v-if="!cartItems.length" class="text-center text-white">
       <img src="/empty-cart.webp" alt="Empty Cart" class="mx-auto w-44" />
       <p class="text-xl font-semibold mb-2">Your cart is empty</p>
