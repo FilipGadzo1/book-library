@@ -41,13 +41,13 @@ const addToCart = () => {
 </script>
 
 <template>
-  <div class="grid grid-cols-2 items-center h-[calc(100vh-64px)] text-gray-200">
+  <div class="m-4 md:grid md:grid-cols-2 items-center h-[calc(100vh-64px)] text-gray-200">
     <div
-      class="justify-self-center flex flex-col gap-4 p-2 rounded-lg border border-gray-500 shadow-2xl shadow-gray-400 bg-gray-700">
+      class="mb-4 items-center md:mb-0 justify-self-center flex flex-col md:gap-4 p-2 rounded-lg border border-gray-500 md:shadow-2xl md:shadow-gray-400 bg-gray-700">
       <img :src="bookData?.volumeInfo.imageLinks.thumbnail" :alt="bookData?.volumeInfo.title" class="w-72" />
       <p class="text-md font-semibold self-center">Book ID: {{ id }}</p>
     </div>
-    <div class="grid grid-cols-2">
+    <div class="md:grid md:grid-cols-2">
       <div class="flex flex-col gap-6">
         <div>
           <p class="text-3xl font-semibold mb-2">{{ bookData?.volumeInfo.title }}</p>
@@ -55,8 +55,8 @@ const addToCart = () => {
             by: <span class="uppercase font-semibold">{{ bookData?.volumeInfo.authors?.join(', ') }}</span>
           </p>
         </div>
-        <div v-html="bookData?.volumeInfo.description" class="text-sm" />
-        <div class="flex justify-between">
+        <div v-html="bookData?.volumeInfo.description" class="font- text-sm" />
+        <div class="mb-4 md:mb-0 flex justify-between">
           <p class="text-lg">Price: ${{ price }}</p>
           <div>
             <input

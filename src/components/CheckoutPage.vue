@@ -18,8 +18,8 @@ const toatlPrice = cart.getTotalPrice;
       </button>
     </div>
     <div v-else>
-      <h1 class="ml-12 text-white text-2xl font-bold mb-5">Checkout</h1>
-      <div class="grid grid-cols-2 mx-12">
+      <h1 class="md:ml-12 text-white text-2xl font-bold mb-5">Checkout</h1>
+      <div class="flex flex-col-reverse gap-4 md:grid md:grid-cols-2 md:mx-12">
         <CheckoutForm />
         <div class="p-4 rounded-lg border border-gray-800 bg-gray-700 text-white overflow-y">
           <h2 class="text-lg mb-2 font-bold">Order Summary</h2>
@@ -29,12 +29,12 @@ const toatlPrice = cart.getTotalPrice;
               <div class="text-sm flex flex-col">
                 <span>{{ item.volumeInfo.title }} ({{ item.quantity }})</span>
                 <span>{{ item.volumeInfo.authors.join(', ') }} </span>
-                <span class="mt-5 font-bold">${{ item.price }}</span>
+                <span class="mt-5 font-semibold">Price: ${{ item.price }}</span>
               </div>
             </div>
           </div>
           <div class="flex justify-between mt-4 border-y border-gray-800 py-4">
-            <span>Total</span>
+            <span class="font-semibold">Total</span>
             <span>${{ toatlPrice }}</span>
           </div>
         </div>

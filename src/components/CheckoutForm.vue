@@ -92,7 +92,7 @@ function formatZip(e: Event) {
 </script>
 
 <template>
-  <form @submit="submitForm" class="w-2/3">
+  <form @submit="submitForm" class="md:w-2/3">
     <div class="text-white mb-4 border-gray-800 border rounded-lg p-4 bg-gray-700">
       <h2 class="text-white text-lg mb-2 font-bold">Contact Information</h2>
       <div class="flex gap-4 mb-4">
