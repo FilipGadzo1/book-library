@@ -16,7 +16,7 @@ const emit = defineEmits(['search']);
         <i class="pi pi-search text-gray-400"></i>
       </div>
       <input
-        id="search"
+        name="search"
         type="search"
         v-model="query"
         :unstyled="true"

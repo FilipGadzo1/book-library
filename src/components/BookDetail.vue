@@ -12,6 +12,8 @@ const props = defineProps<{
   bookData?: BookObject;
 }>();
 
+console.log(props.bookData);
+
 const cartStore = useCartStore();
 const addToCart = () => {
   if (!props.bookData) return;
@@ -41,23 +43,26 @@ const addToCart = () => {
 </script>
 
 <template>
-  <div class="m-4 md:grid md:grid-cols-2 items-center h-[calc(100vh-64px)] text-gray-200">
-    <div
-      class="mb-4 items-center md:mb-0 justify-self-center flex flex-col md:gap-4 p-2 rounded-lg border border-gray-500 md:shadow-2xl md:shadow-gray-400 bg-gray-700">
-      <img :src="bookData?.volumeInfo.imageLinks.thumbnail" :alt="bookData?.volumeInfo.title" class="w-72" />
-      <p class="text-md font-semibold self-center">Book ID: {{ id }}</p>
+  <div class="m-4 md:grid md:grid-cols-6 md:gap-4 items-center text-gray-200 h-[80vh]">
+    <div class="mb-4 items-center md:mb-0 md:col-start-3 justify-self-center flex flex-col md:gap-4 p-2">
+      <img
+        :src="bookData?.volumeInfo.imageLinks.thumbnail"
+        :alt="bookData?.volumeInfo.title"
+        class="md:w-96 rounded-md shadow-2xl" />
     </div>
-    <div class="md:grid md:grid-cols-2">
+    <div class="md:col-start-4 md:col-span-2">
       <div class="flex flex-col gap-6">
         <div>
           <p class="text-3xl font-semibold mb-2">{{ bookData?.volumeInfo.title }}</p>
+
           <p class="italic text-sm">
             by: <span class="uppercase font-semibold">{{ bookData?.volumeInfo.authors?.join(', ') }}</span>
           </p>
+          <p class="text-md font-semibold self-center">Book ID: {{ id }}</p>
         </div>
-        <div v-html="bookData?.volumeInfo.description" class="font- text-sm" />
+        <div v-html="bookData?.volumeInfo.description" class="text-sm" />
         <div class="mb-4 md:mb-0 flex justify-between">
-          <p class="text-lg">Price: ${{ price }}</p>
+          <p class="text-lg font-semibold">Price: ${{ price }}</p>
           <div>
             <input
               name="quantity"
