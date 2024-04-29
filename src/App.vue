@@ -10,7 +10,7 @@ const route = useRoute();
 
   <RouterView v-slot="{ Component }">
     <Transition name="page-slide" mode="out-in">
-      <div :key="route.fullPath">
+      <div :key="route.fullPath" class="mt-20">
         <component :is="Component" />
       </div>
     </Transition>

@@ -28,7 +28,7 @@ const toatlPrice = cart.getTotalPrice;
               <img :src="item.volumeInfo.imageLinks.thumbnail" alt="Book Cover" class="h-20 w-12" />
               <div class="text-sm flex flex-col">
                 <span>{{ item.volumeInfo.title }} ({{ item.quantity }})</span>
-                <span>{{ item.volumeInfo.authors.join(', ') }} </span>
+                <span>{{ item.volumeInfo.authors?.join(', ') }} </span>
                 <span class="mt-5 font-semibold">Price: ${{ item.price }}</span>
               </div>
             </div>

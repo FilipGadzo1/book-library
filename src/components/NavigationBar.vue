@@ -6,7 +6,7 @@ const numberOfItems = computed(() => cartStore.cartItemsCount);
 </script>
 
 <template>
-  <nav class="bg-gray-900">
+  <nav class="bg-gray-900 fixed top-0 w-full">
     <div class="grid grid-cols-3 md:grid-cols-6 items-center p-4">
       <RouterLink to="/" class="flex gap-3">
         <img src="/logo.webp" class="h-8" alt="Bookstore Logo" />
