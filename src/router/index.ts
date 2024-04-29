@@ -1,9 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
-import CheckoutPage from '@/components/CheckoutPage.vue';
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -24,7 +23,7 @@ const router = createRouter({
     {
       path: '/checkout',
       name: 'checkout',
-      component: CheckoutPage,
+      component: () => import('@/views/CheckoutView.vue'),
     },
   ],
   linkActiveClass: 'active',

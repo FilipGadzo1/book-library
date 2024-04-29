@@ -61,6 +61,7 @@ const addToCart = () => {
           <div>
             <input
               name="quantity"
+              value="1"
               type="number"
               min="1"
               class="w-16 p-2 text-center border border-gray-500 rounded-lg bg-gray-900 mr-2"
