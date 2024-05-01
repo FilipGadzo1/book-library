@@ -10,7 +10,7 @@ const emit = defineEmits(['search']);
 </script>
 
 <template>
-  <form class="max-w-md mx-auto mt-2" type="submit">
+  <form class="md:max-w-md md:mx-auto mx-4" type="submit">
     <div class="relative">
       <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
         <i class="pi pi-search text-gray-400"></i>

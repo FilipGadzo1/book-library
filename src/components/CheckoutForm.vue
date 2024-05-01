@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cart';
+import { useToast } from 'primevue/usetoast';
+import Toast from 'primevue/toast';
+import emailjs from '@emailjs/browser';
 
 const router = useRouter();
-
+const toast = useToast();
 const cart = useCartStore();
 
 const firstName = ref('');
@@ -16,8 +19,7 @@ const formattedCreditCardNumber = ref('');
 const expDate = ref('');
 const cvv = ref('');
 
-function submitForm(e: any) {
-  e.preventDefault();
+function submitForm() {
   const formData = {
     firstName: firstName.value,
     lastName: lastName.value,
@@ -25,13 +27,37 @@ function submitForm(e: any) {
     address: address.value,
     city: city.value,
     zip: zip.value,
-    cardNumber: formattedCreditCardNumber.value,
-    expDate: expDate.value,
-    cvv: cvv.value,
+    price: cart.getTotalPrice,
   };
-  console.log(formData);
-  cart.removeAllItemsFromCart();
-  router.push('/');
+
+  emailjs
+    .send('service_c1zjkzr', 'template_rqvh9rf', formData, {
+      publicKey: 'user_AxAtucXpLtym8PVqPywlf',
+    })
+    .then(
+      () => {
+        toast.add({
+          severity: 'success',
+          summary: 'Success Message',
+          detail: `Book${cart.cartItemsCount > 1 ? 's' : ''} successfully purchased. Email confirmation will be sent to ${email.value}`,
+          group: 'bc',
+          life: 3000,
+        });
+        setTimeout(() => {
+          router.push('/');
+          cart.removeAllItemsFromCart();
+        }, 3000);
+      },
+      (error) => {
+        toast.add({
+          severity: 'error',
+          summary: 'Error Message',
+          detail: `${error.text || 'An error occurred'}`,
+          group: 'bc',
+          life: 3000,
+        });
+      }
+    );
 }
 
 function formatCreditCardNumber(e: Event) {
@@ -92,7 +118,7 @@ function formatZip(e: Event) {
 </script>
 
 <template>
-  <form @submit="submitForm">
+  <form @submit.prevent="submitForm">
     <div class="text-white mb-4 border-gray-800 border rounded-lg p-4 bg-gray-700">
       <h2 class="text-white text-lg mb-2 font-bold">Contact Information</h2>
       <div class="flex gap-4 mb-4">
@@ -143,6 +169,7 @@ function formatZip(e: Event) {
         Place Order
       </button>
     </div>
+    <Toast position="bottom-center" group="bc" />
   </form>
 </template>
 

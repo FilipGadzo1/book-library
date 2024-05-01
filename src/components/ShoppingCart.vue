@@ -52,17 +52,17 @@ function goToCheckout() {
             </div>
           </div>
         </div>
-
-        <div class="border-y border-gray-600 md:border-y-0 flex flex-col gap-4 justify-end py-2">
-          <div class="flex justify-between">
-            <p class="text-lg font-semibold">Total:</p>
-            <p class="text-lg font-semibold">${{ store.getTotalPrice }}</p>
-          </div>
-          <button
-            class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg w-fit"
-            @click="goToCheckout">
-            Checkout
-          </button>
+      </div>
+      <div
+        class="border-y border-gray-700 md:border-y-0 flex flex-row-reverse md:flex-row justify-between md:justify-start items-center gap-4 py-2 mx-4">
+        <button
+          class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg w-fit"
+          @click="goToCheckout">
+          Checkout
+        </button>
+        <div class="flex gap-4">
+          <p class="text-lg font-semibold">Total:</p>
+          <p class="text-lg font-semibold">${{ store.getTotalPrice }}</p>
         </div>
       </div>
     </div>
