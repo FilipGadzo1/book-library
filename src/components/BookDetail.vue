@@ -12,8 +12,6 @@ const props = defineProps<{
   bookData?: BookObject;
 }>();
 
-console.log(props.bookData);
-
 const cartStore = useCartStore();
 const addToCart = () => {
   if (!props.bookData) return;
