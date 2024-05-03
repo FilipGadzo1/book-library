@@ -63,6 +63,7 @@ function submitForm() {
 function formatCreditCardNumber(e: Event) {
   const input = e.target as HTMLInputElement;
   let trimmedValue = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+
   if (trimmedValue.length > 16) {
     trimmedValue = trimmedValue.slice(0, 16);
   }

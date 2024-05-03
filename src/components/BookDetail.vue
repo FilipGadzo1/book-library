@@ -15,7 +15,9 @@ const props = defineProps<{
 const cartStore = useCartStore();
 const addToCart = () => {
   if (!props.bookData) return;
+
   const quantity = document.querySelector('input[name="quantity"]') as HTMLInputElement;
+
   if (quantity.valueAsNumber <= 0 || isNaN(quantity.valueAsNumber)) {
     toast.add({
       severity: 'error',
@@ -26,6 +28,7 @@ const addToCart = () => {
     });
     return;
   }
+
   toast.add({
     severity: 'success',
     summary: 'Success Message',

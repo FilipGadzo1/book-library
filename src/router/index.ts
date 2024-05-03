@@ -19,14 +19,15 @@ const router = createRouter({
       name: 'book-details',
       component: () => import('@/views/BookDetailsView.vue'),
       props: true,
+      alias: '/',
     },
     {
       path: '/checkout',
       name: 'checkout',
       component: () => import('@/views/CheckoutView.vue'),
+      alias: '/',
     },
   ],
-  linkActiveClass: 'active',
 });
 
 export default router;

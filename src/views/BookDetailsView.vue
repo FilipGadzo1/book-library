@@ -7,6 +7,7 @@ const book = ref<BookObject>();
 
 onBeforeMount(async () => {
   let data: BookObject = await fetch(`${apiUrl}/${props.id}`).then((res) => res.json());
+
   book.value = data;
 });
 </script>
