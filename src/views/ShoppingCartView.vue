@@ -9,30 +9,29 @@ import StepperPanel from 'primevue/stepperpanel';
 import { Vue3Lottie } from 'vue3-lottie';
 import success from '@/assets/lottie/success.json';
 
-enum ScreenWidth {
-  HORIZONTAL = 'horizontal',
-  VERTICAL = 'vertical',
-}
-
 const cart = useCartStore();
 const toast = useToast();
 
 const screenWidth = ref(window.innerWidth);
 
-const stepperOrientation = ref<ScreenWidth>(ScreenWidth.HORIZONTAL);
-
 const handleResize = () => {
   screenWidth.value = window.innerWidth;
 };
 
-window.addEventListener('resize', handleResize);
+onMounted(() => {
+  window.addEventListener('resize', handleResize);
+});
 
-watch(
-  () => screenWidth.value,
-  (value) => {
-    stepperOrientation.value = value > 768 ? ScreenWidth.HORIZONTAL : ScreenWidth.VERTICAL;
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
+});
+
+const screenSize = computed(() => {
+  if (screenWidth.value < 768) {
+    return 'vertical';
   }
-);
+  return 'horizontal';
+});
 
 const stepperPanelDesign = {
   number: {
@@ -128,7 +127,8 @@ function onSubmit() {
     </div>
     <div v-else>
       <Stepper
-        :orientation="stepperOrientation"
+        linear
+        :orientation="screenSize"
         :pt="{
           panelContainer: {
             class: 'bg-gray-600 ',
@@ -176,7 +176,7 @@ function onSubmit() {
         </StepperPanel>
         <StepperPanel header="Confirmation" :pt="stepperPanelDesign">
           <template #content="">
-            <div class="flex justify-center">
+            <div class="w-1/3 mx-auto">
               <CheckoutDetails />
             </div>
             <div class="flex mt-2 justify-end">

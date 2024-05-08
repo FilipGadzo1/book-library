@@ -16,7 +16,7 @@ const isModalVisible = useVModel(props, 'visible');
 <template>
   <Dialog v-model:visible="isModalVisible" modal :header="bookData?.volumeInfo.title" class="w-[90%] md:w-[50%]">
     <template #container>
-      <div class="bg-gray-600 border-none rounded-xl">
+      <div class="bg-gray-700 border-none rounded-xl">
         <div class="flex justify-end">
           <Button icon="pi pi-times" class="text-white hover:bg-gray-500" text rounded @click="$emit('cancel')" />
         </div>

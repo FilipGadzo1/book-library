@@ -53,10 +53,10 @@ const addToCart = () => {
       <div>
         <p class="text-lg md:text-3xl font-semibold">{{ bookData?.volumeInfo.title }}</p>
         <StarRating :rating="bookData?.volumeInfo.rating!" />
-        <p v-if="bookData?.volumeInfo.authors" class="italic text-xs md:text-sm text-gray-800">
+        <p v-if="bookData?.volumeInfo.authors" class="italic text-xs md:text-sm text-gray-400">
           by: <span class="font-semibold">{{ bookData?.volumeInfo.authors.join(', ') }}</span>
         </p>
-        <p class="text-xs md:text-sm font-semibold self-center text-gray-800">Serial Number: {{ bookData?.id }}</p>
+        <p class="text-xs md:text-sm font-semibold self-center text-gray-400">Serial Number: {{ bookData?.id }}</p>
       </div>
       <div
         v-html="bookData?.volumeInfo.description"
