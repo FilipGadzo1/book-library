@@ -6,7 +6,6 @@ const toatlPrice = cart.getTotalPrice;
 </script>
 <template>
   <div class="p-4 rounded-lg border border-gray-800 bg-gray-700 text-white overflow-y">
-    <h2 class="text-lg mb-2 font-bold">Order Summary</h2>
     <div v-for="item in cartItems" :key="item.id" class="mb-4">
       <div class="flex gap-6">
         <img :src="item.volumeInfo.imageLinks.thumbnail" alt="Book Cover" class="h-20 w-12" />

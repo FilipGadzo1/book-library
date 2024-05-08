@@ -176,7 +176,7 @@ function onSubmit() {
         </StepperPanel>
         <StepperPanel header="Confirmation" :pt="stepperPanelDesign">
           <template #content="">
-            <div class="w-1/3 mx-auto">
+            <div class="md:w-1/3 md:mx-auto">
               <CheckoutDetails />
             </div>
             <div class="flex mt-2 justify-end">
