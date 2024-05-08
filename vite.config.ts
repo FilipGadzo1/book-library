@@ -13,7 +13,8 @@ export default defineConfig({
     vueJsx(),
     AutoImport({
       include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],
-      imports: ['vue', 'vue-router', 'pinia', 'vitest'],
+      imports: ['vue', 'vue-router', 'vee-validate', 'pinia', 'vitest'],
+      dirs: ['./src/composables'],
       dts: true,
       vueTemplate: true,
     }),

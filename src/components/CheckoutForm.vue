@@ -1,191 +1,72 @@
 <script setup lang="ts">
-import { useCartStore } from '@/stores/cart';
-import { useToast } from 'primevue/usetoast';
-import Toast from 'primevue/toast';
-import emailjs from '@emailjs/browser';
+import type { FormValues } from '@/types/book';
+import { toTypedSchema } from '@vee-validate/zod';
+import { z } from 'zod';
 
-const router = useRouter();
-const toast = useToast();
-const cart = useCartStore();
+const emit = defineEmits<{
+  submit: [values: FormValues, evt?: Event];
+}>();
 
-const firstName = ref('');
-const lastName = ref('');
-const email = ref('');
-const address = ref('');
-const city = ref('');
-const zip = ref('');
-const cardNumber = ref('');
-const formattedCreditCardNumber = ref('');
-const expDate = ref('');
-const cvv = ref('');
-
-function submitForm() {
-  const formData = {
-    firstName: firstName.value,
-    lastName: lastName.value,
-    email: email.value,
-    address: address.value,
-    city: city.value,
-    zip: zip.value,
-    price: cart.getTotalPrice,
-  };
-
-  emailjs
-    .send('service_c1zjkzr', 'template_rqvh9rf', formData, {
-      publicKey: 'user_AxAtucXpLtym8PVqPywlf',
+const { handleSubmit } = useForm<FormValues>({
+  initialValues: {
+    firstName: '',
+    lastName: '',
+    email: '',
+    address: '',
+    city: '',
+    zip: '',
+    cardNumber: '',
+    expDate: '',
+    cvv: '',
+  },
+  validationSchema: toTypedSchema(
+    z.object({
+      firstName: z.string().min(1, "First name can't be empty"),
+      lastName: z.string().min(1, "Last name can't be empty"),
+      email: z.string().email(),
+      address: z.string().min(1, "Address can't be empty"),
+      city: z.string().min(1, "City can't be empty"),
+      zip: z.string().min(1, "Zip can't be empty").max(5, 'Zip code must be 5 digits'),
+      cardNumber: z.string().min(1, "Card number can't be empty"),
+      expDate: z.string().min(1, "Expiration date can't be empty"),
+      cvv: z.string().min(1, "CVV can't be empty"),
     })
-    .then(
-      () => {
-        toast.add({
-          severity: 'success',
-          summary: 'Success Message',
-          detail: `Book${cart.cartItemsCount > 1 ? 's' : ''} successfully purchased. Email confirmation will be sent to ${email.value}`,
-          group: 'bc',
-          life: 3000,
-        });
-        setTimeout(() => {
-          router.push('/');
-          cart.removeAllItemsFromCart();
-        }, 3000);
-      },
-      (error) => {
-        toast.add({
-          severity: 'error',
-          summary: 'Error Message',
-          detail: `${error.text || 'An error occurred'}`,
-          group: 'bc',
-          life: 3000,
-        });
-      }
-    );
-}
+  ),
+});
 
-function formatCreditCardNumber(e: Event) {
-  const input = e.target as HTMLInputElement;
-  let trimmedValue = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+const onSubmit = handleSubmit((values, ctx) => {
+  emit('submit', values, ctx.evt);
+});
 
-  if (trimmedValue.length > 16) {
-    trimmedValue = trimmedValue.slice(0, 16);
-  }
-
-  const formattedValue = [];
-
-  for (let i = 0; i < trimmedValue.length; i += 4) {
-    formattedValue.push(trimmedValue.substr(i, 4));
-  }
-
-  cardNumber.value = trimmedValue;
-  formattedCreditCardNumber.value = formattedValue.join(' ');
-}
-
-function formatDate(e: Event) {
-  const input = e.target as HTMLInputElement;
-  let trimmedValue = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-
-  if (trimmedValue.length > 4) {
-    trimmedValue = trimmedValue.slice(0, 4);
-  }
-
-  const formattedValue = [];
-
-  for (let i = 0; i < trimmedValue.length; i += 2) {
-    formattedValue.push(trimmedValue.substr(i, 2));
-  }
-
-  expDate.value = formattedValue.join('/');
-}
-
-function formatCvv(e: Event) {
-  const input = e.target as HTMLInputElement;
-  let trimmedValue = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-
-  if (trimmedValue.length > 3) {
-    trimmedValue = trimmedValue.slice(0, 3);
-  }
-
-  cvv.value = trimmedValue;
-}
-
-function formatZip(e: Event) {
-  const input = e.target as HTMLInputElement;
-  let trimmedValue = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-
-  if (trimmedValue.length > 5) {
-    trimmedValue = trimmedValue.slice(0, 5);
-  }
-
-  zip.value = trimmedValue;
-}
+defineExpose({ submit: onSubmit });
 </script>
 
 <template>
-  <form @submit.prevent="submitForm">
+  <form @submit.prevent="onSubmit">
     <div class="text-white mb-4 border-gray-800 border rounded-lg p-4 bg-gray-700">
-      <h2 class="text-white text-lg mb-2 font-bold">Contact Information</h2>
-      <div class="flex gap-4 mb-4">
-        <input type="text" name="first-name" v-model="firstName" placeholder="First Name" required />
-        <input type="text" name="last-name" v-model="lastName" placeholder="Last Name" required />
+      <div class="md:flex gap-4 md:mb-4">
+        <FormInputField name="firstName" placeholder="First Name" />
+        <FormInputField name="lastName" placeholder="Last Name" />
       </div>
-      <input type="email" name="email" v-model="email" placeholder="Emal" required />
+      <FormInputField name="email" placeholder="Email" />
     </div>
 
     <div class="text-white mb-4 border border-gray-800 rounded-lg p-4 bg-gray-700">
-      <h2 class="text-white text-lg mb-2 font-bold">Shipping Information</h2>
-      <input type="text" name="address" v-model="address" placeholder="Address" required />
-      <div class="flex gap-4 mt-4">
-        <input type="text" name="city" v-model="city" placeholder="City" required />
-
-        <input type="text" name="zip" v-model="zip" placeholder="Zip code" required @input="formatZip" />
+      <FormInputField name="address" placeholder="Address" />
+      <div class="md:flex gap-4 md:mt-4">
+        <FormInputField name="city" placeholder="City" />
+        <FormInputField name="zip" placeholder="Zip" />
       </div>
     </div>
 
     <div class="text-white border border-gray-800 rounded-lg p-4 bg-gray-700">
-      <h2 class="text-white text-lg mb-2 font-bold">Payment method</h2>
       <div class="relative">
-        <input
-          type="text"
-          name="card-number"
-          v-model="formattedCreditCardNumber"
-          placeholder="4242 4242 4242 4242"
-          @input="formatCreditCardNumber"
-          required />
-        <div class="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
-          <svg fill="none" class="h-6 dark:text-white" viewBox="0 0 36 21">
-            <path
-              fill="currentColor"
-              d="M23.315 4.773c-2.542 0-4.813 1.3-4.813 3.705 0 2.756 4.028 2.947 4.028 4.332 0 .583-.676 1.105-1.832 1.105-1.64 0-2.866-.73-2.866-.73l-.524 2.426s1.412.616 3.286.616c2.78 0 4.966-1.365 4.966-3.81 0-2.913-4.045-3.097-4.045-4.383 0-.457.555-.957 1.708-.957 1.3 0 2.36.53 2.36.53l.514-2.343s-1.154-.491-2.782-.491zM.062 4.95L0 5.303s1.07.193 2.032.579c1.24.442 1.329.7 1.537 1.499l2.276 8.664h3.05l4.7-11.095h-3.043l-3.02 7.543L6.3 6.1c-.113-.732-.686-1.15-1.386-1.15H.062zm14.757 0l-2.387 11.095h2.902l2.38-11.096h-2.895zm16.187 0c-.7 0-1.07.37-1.342 1.016L25.41 16.045h3.044l.589-1.68h3.708l.358 1.68h2.685L33.453 4.95h-2.447zm.396 2.997l.902 4.164h-2.417l1.515-4.164z" />
-          </svg>
-        </div>
+        <CardInputForm name="cardNumber" placeholder="4242 4242 4242 4242" />
       </div>
-      <div class="grid grid-cols-3 gap-4 mt-4">
-        <input type="text" name="exp-date" v-model="expDate" placeholder="MM/YY" required @input="formatDate" />
-
-        <input type="text" name="cvv" v-model="cvv" placeholder="CVV" required @input="formatCvv" />
+      <div class="md:flex gap-4 md:mt-4">
+        <CardDateInputForm name="expDate" placeholder="MM/YY" />
+        <CardCvvInputForm name="cvv" placeholder="CVV" />
       </div>
     </div>
-    <div class="w-full md:flex md:justify-end">
-      <button
-        type="submit"
-        class="bg-blue-500 hover:bg-blue-700 md:w-fit w-full text-white font-semibold py-2 px-4 rounded-lg mt-4">
-        Place Order
-      </button>
-    </div>
-    <Toast position="bottom-center" group="bc" />
   </form>
 </template>
-
-<style scoped>
-input:-webkit-autofill,
-input:-webkit-autofill:focus {
-  transition:
-    background-color 600000s 0s,
-    color 600000s 0s;
-}
-input[data-autocompleted] {
-  background-color: transparent !important;
-}
-
-input {
-  @apply block w-full p-4 text-sm text-gray-200 border border-gray-500 rounded-lg placeholder-gray-400 bg-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent;
-}
-</style>

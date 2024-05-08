@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
+import PageNotFound from '@/components/PageNotFound.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,17 +16,9 @@ const router = createRouter({
       component: () => import('@/views/ShoppingCartView.vue'),
     },
     {
-      path: '/book/:id',
-      name: 'book-details',
-      component: () => import('@/views/BookDetailsView.vue'),
-      props: true,
-      alias: '/',
-    },
-    {
-      path: '/checkout',
-      name: 'checkout',
-      component: () => import('@/views/CheckoutView.vue'),
-      alias: '/',
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: PageNotFound,
     },
   ],
 });
