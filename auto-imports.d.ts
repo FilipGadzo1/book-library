@@ -6,6 +6,8 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
+  const FieldContextKey: typeof import('vee-validate')['FieldContextKey']
+  const FormContextKey: typeof import('vee-validate')['FormContextKey']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const afterAll: typeof import('vitest')['afterAll']
   const afterEach: typeof import('vitest')['afterEach']
@@ -14,11 +16,13 @@ declare global {
   const beforeEach: typeof import('vitest')['beforeEach']
   const chai: typeof import('vitest')['chai']
   const computed: typeof import('vue')['computed']
+  const configure: typeof import('vee-validate')['configure']
   const createApp: typeof import('vue')['createApp']
   const createPinia: typeof import('pinia')['createPinia']
   const customRef: typeof import('vue')['customRef']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
+  const defineRule: typeof import('vee-validate')['defineRule']
   const defineStore: typeof import('pinia')['defineStore']
   const describe: typeof import('vitest')['describe']
   const effectScope: typeof import('vue')['effectScope']
@@ -75,12 +79,34 @@ declare global {
   const triggerRef: typeof import('vue')['triggerRef']
   const unref: typeof import('vue')['unref']
   const useAttrs: typeof import('vue')['useAttrs']
+  const useCreditCardFormat: typeof import('./src/composables/validations')['useCreditCardFormat']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
+  const useField: typeof import('vee-validate')['useField']
+  const useFieldArray: typeof import('vee-validate')['useFieldArray']
+  const useFieldError: typeof import('vee-validate')['useFieldError']
+  const useFieldValue: typeof import('vee-validate')['useFieldValue']
+  const useForm: typeof import('vee-validate')['useForm']
+  const useFormErrors: typeof import('vee-validate')['useFormErrors']
+  const useFormValues: typeof import('vee-validate')['useFormValues']
+  const useFormat: typeof import('./src/composables/validations')['useFormat']
+  const useIsFieldDirty: typeof import('vee-validate')['useIsFieldDirty']
+  const useIsFieldTouched: typeof import('vee-validate')['useIsFieldTouched']
+  const useIsFieldValid: typeof import('vee-validate')['useIsFieldValid']
+  const useIsFormDirty: typeof import('vee-validate')['useIsFormDirty']
+  const useIsFormTouched: typeof import('vee-validate')['useIsFormTouched']
+  const useIsFormValid: typeof import('vee-validate')['useIsFormValid']
+  const useIsSubmitting: typeof import('vee-validate')['useIsSubmitting']
   const useLink: typeof import('vue-router')['useLink']
+  const useResetForm: typeof import('vee-validate')['useResetForm']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']
   const useSlots: typeof import('vue')['useSlots']
+  const useSubmitCount: typeof import('vee-validate')['useSubmitCount']
+  const useSubmitForm: typeof import('vee-validate')['useSubmitForm']
+  const useValidateField: typeof import('vee-validate')['useValidateField']
+  const useValidateForm: typeof import('vee-validate')['useValidateForm']
+  const validate: typeof import('vee-validate')['validate']
   const vi: typeof import('vitest')['vi']
   const vitest: typeof import('vitest')['vitest']
   const watch: typeof import('vue')['watch']
@@ -100,6 +126,8 @@ declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly FieldContextKey: UnwrapRef<typeof import('vee-validate')['FieldContextKey']>
+    readonly FormContextKey: UnwrapRef<typeof import('vee-validate')['FormContextKey']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly afterAll: UnwrapRef<typeof import('vitest')['afterAll']>
     readonly afterEach: UnwrapRef<typeof import('vitest')['afterEach']>
@@ -108,11 +136,13 @@ declare module 'vue' {
     readonly beforeEach: UnwrapRef<typeof import('vitest')['beforeEach']>
     readonly chai: UnwrapRef<typeof import('vitest')['chai']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
+    readonly configure: UnwrapRef<typeof import('vee-validate')['configure']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
     readonly createPinia: UnwrapRef<typeof import('pinia')['createPinia']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
+    readonly defineRule: UnwrapRef<typeof import('vee-validate')['defineRule']>
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
     readonly describe: UnwrapRef<typeof import('vitest')['describe']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
@@ -171,10 +201,31 @@ declare module 'vue' {
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
+    readonly useField: UnwrapRef<typeof import('vee-validate')['useField']>
+    readonly useFieldArray: UnwrapRef<typeof import('vee-validate')['useFieldArray']>
+    readonly useFieldError: UnwrapRef<typeof import('vee-validate')['useFieldError']>
+    readonly useFieldValue: UnwrapRef<typeof import('vee-validate')['useFieldValue']>
+    readonly useForm: UnwrapRef<typeof import('vee-validate')['useForm']>
+    readonly useFormErrors: UnwrapRef<typeof import('vee-validate')['useFormErrors']>
+    readonly useFormValues: UnwrapRef<typeof import('vee-validate')['useFormValues']>
+    readonly useFormat: UnwrapRef<typeof import('./src/composables/validations')['useFormat']>
+    readonly useIsFieldDirty: UnwrapRef<typeof import('vee-validate')['useIsFieldDirty']>
+    readonly useIsFieldTouched: UnwrapRef<typeof import('vee-validate')['useIsFieldTouched']>
+    readonly useIsFieldValid: UnwrapRef<typeof import('vee-validate')['useIsFieldValid']>
+    readonly useIsFormDirty: UnwrapRef<typeof import('vee-validate')['useIsFormDirty']>
+    readonly useIsFormTouched: UnwrapRef<typeof import('vee-validate')['useIsFormTouched']>
+    readonly useIsFormValid: UnwrapRef<typeof import('vee-validate')['useIsFormValid']>
+    readonly useIsSubmitting: UnwrapRef<typeof import('vee-validate')['useIsSubmitting']>
     readonly useLink: UnwrapRef<typeof import('vue-router')['useLink']>
+    readonly useResetForm: UnwrapRef<typeof import('vee-validate')['useResetForm']>
     readonly useRoute: UnwrapRef<typeof import('vue-router')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('vue-router')['useRouter']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
+    readonly useSubmitCount: UnwrapRef<typeof import('vee-validate')['useSubmitCount']>
+    readonly useSubmitForm: UnwrapRef<typeof import('vee-validate')['useSubmitForm']>
+    readonly useValidateField: UnwrapRef<typeof import('vee-validate')['useValidateField']>
+    readonly useValidateForm: UnwrapRef<typeof import('vee-validate')['useValidateForm']>
+    readonly validate: UnwrapRef<typeof import('vee-validate')['validate']>
     readonly vi: UnwrapRef<typeof import('vitest')['vi']>
     readonly vitest: UnwrapRef<typeof import('vitest')['vitest']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
@@ -187,6 +238,8 @@ declare module '@vue/runtime-core' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly FieldContextKey: UnwrapRef<typeof import('vee-validate')['FieldContextKey']>
+    readonly FormContextKey: UnwrapRef<typeof import('vee-validate')['FormContextKey']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly afterAll: UnwrapRef<typeof import('vitest')['afterAll']>
     readonly afterEach: UnwrapRef<typeof import('vitest')['afterEach']>
@@ -195,11 +248,13 @@ declare module '@vue/runtime-core' {
     readonly beforeEach: UnwrapRef<typeof import('vitest')['beforeEach']>
     readonly chai: UnwrapRef<typeof import('vitest')['chai']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
+    readonly configure: UnwrapRef<typeof import('vee-validate')['configure']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
     readonly createPinia: UnwrapRef<typeof import('pinia')['createPinia']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
+    readonly defineRule: UnwrapRef<typeof import('vee-validate')['defineRule']>
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
     readonly describe: UnwrapRef<typeof import('vitest')['describe']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
@@ -258,10 +313,31 @@ declare module '@vue/runtime-core' {
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
+    readonly useField: UnwrapRef<typeof import('vee-validate')['useField']>
+    readonly useFieldArray: UnwrapRef<typeof import('vee-validate')['useFieldArray']>
+    readonly useFieldError: UnwrapRef<typeof import('vee-validate')['useFieldError']>
+    readonly useFieldValue: UnwrapRef<typeof import('vee-validate')['useFieldValue']>
+    readonly useForm: UnwrapRef<typeof import('vee-validate')['useForm']>
+    readonly useFormErrors: UnwrapRef<typeof import('vee-validate')['useFormErrors']>
+    readonly useFormValues: UnwrapRef<typeof import('vee-validate')['useFormValues']>
+    readonly useFormat: UnwrapRef<typeof import('./src/composables/validations')['useFormat']>
+    readonly useIsFieldDirty: UnwrapRef<typeof import('vee-validate')['useIsFieldDirty']>
+    readonly useIsFieldTouched: UnwrapRef<typeof import('vee-validate')['useIsFieldTouched']>
+    readonly useIsFieldValid: UnwrapRef<typeof import('vee-validate')['useIsFieldValid']>
+    readonly useIsFormDirty: UnwrapRef<typeof import('vee-validate')['useIsFormDirty']>
+    readonly useIsFormTouched: UnwrapRef<typeof import('vee-validate')['useIsFormTouched']>
+    readonly useIsFormValid: UnwrapRef<typeof import('vee-validate')['useIsFormValid']>
+    readonly useIsSubmitting: UnwrapRef<typeof import('vee-validate')['useIsSubmitting']>
     readonly useLink: UnwrapRef<typeof import('vue-router')['useLink']>
+    readonly useResetForm: UnwrapRef<typeof import('vee-validate')['useResetForm']>
     readonly useRoute: UnwrapRef<typeof import('vue-router')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('vue-router')['useRouter']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
+    readonly useSubmitCount: UnwrapRef<typeof import('vee-validate')['useSubmitCount']>
+    readonly useSubmitForm: UnwrapRef<typeof import('vee-validate')['useSubmitForm']>
+    readonly useValidateField: UnwrapRef<typeof import('vee-validate')['useValidateField']>
+    readonly useValidateForm: UnwrapRef<typeof import('vee-validate')['useValidateForm']>
+    readonly validate: UnwrapRef<typeof import('vee-validate')['validate']>
     readonly vi: UnwrapRef<typeof import('vitest')['vi']>
     readonly vitest: UnwrapRef<typeof import('vitest')['vitest']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>

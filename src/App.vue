@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
+import Toast from 'primevue/toast';
+
 const route = useRoute();
 </script>
 
@@ -15,6 +17,7 @@ const route = useRoute();
       </div>
     </Transition>
   </RouterView>
+  <Toast position="bottom-center" />
 </template>
 
 <style>

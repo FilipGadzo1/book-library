@@ -1,68 +1,17 @@
 export interface BookObject {
-  kind: string;
   id: string;
-  etag: string;
-  selfLink: string;
   volumeInfo: VolumeInfo;
-  saleInfo: SaleInfo;
-  accessInfo: AccessInfo;
   quantity: number;
   price: number;
-}
-
-export interface AccessInfo {
-  country: string;
-  viewability: string;
-  embeddable: boolean;
-  publicDomain: boolean;
-  textToSpeechPermission: string;
-  epub: Epub;
-  pdf: Pdf;
-  accessViewStatus: string;
-}
-
-export interface Pdf {
-  isAvailable: boolean;
-}
-
-export interface Epub {
-  isAvailable: boolean;
-  acsTokenLink: string;
-}
-
-export interface SaleInfo {
-  country: string;
-  saleability: string;
-  isEbook: boolean;
-  listPrice: ListPrice;
-  retailPrice: ListPrice;
-  buyLink: string;
-}
-
-export interface ListPrice {
-  amount: number;
-  currencyCode: string;
 }
 
 export interface VolumeInfo {
   title: string;
   authors: string[];
-  publisher: string;
-  publishedDate: string;
   description: string;
-  industryIdentifiers: IndustryIdentifier[];
-  pageCount: number;
-  dimensions: Dimensions;
   printType: string;
-  mainCategory: string;
-  categories: string[];
-  averageRating: number;
-  ratingsCount: number;
-  contentVersion: string;
+  rating: number;
   imageLinks: ImageLinks;
-  language: string;
-  infoLink: string;
-  canonicalVolumeLink: string;
 }
 
 export interface ImageLinks {
@@ -74,13 +23,14 @@ export interface ImageLinks {
   extraLarge: string;
 }
 
-export interface Dimensions {
-  height: string;
-  width: string;
-  thickness: string;
-}
-
-export interface IndustryIdentifier {
-  type: string;
-  identifier: string;
+export interface FormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  address: string;
+  city: string;
+  zip: string;
+  cardNumber: string;
+  expDate: string;
+  cvv: string;
 }

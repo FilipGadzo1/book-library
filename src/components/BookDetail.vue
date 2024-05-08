@@ -2,28 +2,28 @@
 import type { BookObject } from '@/types';
 import { useCartStore } from '@/stores/cart';
 import { useToast } from 'primevue/usetoast';
-import Toast from 'primevue/toast';
 
-const router = useRouter();
+const emit = defineEmits<{
+  cancel: [];
+}>();
+
 const toast = useToast();
-const price = ref(+router.currentRoute.value.query.price!);
 const props = defineProps<{
-  id: string;
   bookData?: BookObject;
 }>();
 
 const cartStore = useCartStore();
+
+const quantity = ref<number>(1);
+
 const addToCart = () => {
   if (!props.bookData) return;
 
-  const quantity = document.querySelector('input[name="quantity"]') as HTMLInputElement;
-
-  if (quantity.valueAsNumber <= 0 || isNaN(quantity.valueAsNumber)) {
+  if (quantity.value <= 0 || isNaN(quantity.value)) {
     toast.add({
       severity: 'error',
       summary: 'Error Message',
       detail: 'Please enter a valid quantity',
-      group: 'bc',
       life: 3000,
     });
     return;
@@ -32,53 +32,63 @@ const addToCart = () => {
   toast.add({
     severity: 'success',
     summary: 'Success Message',
-    detail: `Item${quantity.valueAsNumber > 1 ? 's' : ''} successfully added to cart`,
-    group: 'bc',
+    detail: `Item${quantity.value > 1 ? 's' : ''} successfully added to cart`,
     life: 3000,
   });
-  cartStore.addToCart(
-    { ...props.bookData, price: price.value, quantity: quantity.valueAsNumber },
-    quantity.valueAsNumber
-  );
+  cartStore.addToCart({ ...props.bookData, quantity: quantity.value }, quantity.value);
+  emit('cancel');
 };
 </script>
 
 <template>
-  <div class="m-4 md:grid md:grid-cols-6 md:gap-4 items-center text-gray-200 h-[80vh]">
-    <div class="mb-4 items-center md:mb-0 md:col-start-3 justify-self-center flex flex-col md:gap-4 p-2">
+  <div class="mx-4 mb-9 md:grid md:grid-cols-2 items-center text-white">
+    <div class="flex justify-center mb-4">
       <img
         :src="bookData?.volumeInfo.imageLinks.thumbnail"
         :alt="bookData?.volumeInfo.title"
-        class="md:w-96 rounded-md shadow-2xl" />
+        class="md:w-96 rounded-md shadow-xl md:shadow-2xl" />
     </div>
-    <div class="md:col-start-4 md:col-span-2">
-      <div class="flex flex-col gap-6">
-        <div>
-          <p class="text-3xl font-semibold mb-2">{{ bookData?.volumeInfo.title }}</p>
 
-          <p class="italic text-sm">
-            by: <span class="uppercase font-semibold">{{ bookData?.volumeInfo.authors?.join(', ') }}</span>
-          </p>
-          <p class="text-md font-semibold self-center">Book ID: {{ id }}</p>
-        </div>
-        <div v-html="bookData?.volumeInfo.description" class="text-sm" />
-        <div class="mb-4 md:mb-0 flex justify-between">
-          <p class="text-lg font-semibold">Price: ${{ price }}</p>
-          <div>
-            <input
-              name="quantity"
-              value="1"
-              type="number"
-              min="1"
-              class="w-16 p-2 text-center border border-gray-500 rounded-lg bg-gray-900 mr-2"
-              placeholder="1" />
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" @click="addToCart">
-              Add to Cart
-            </button>
-          </div>
+    <div class="grid grid-cols-1 gap-4">
+      <div>
+        <p class="text-lg md:text-3xl font-semibold">{{ bookData?.volumeInfo.title }}</p>
+        <StarRating :rating="bookData?.volumeInfo.rating!" />
+        <p v-if="bookData?.volumeInfo.authors" class="italic text-xs md:text-sm text-gray-800">
+          by: <span class="font-semibold">{{ bookData?.volumeInfo.authors.join(', ') }}</span>
+        </p>
+        <p class="text-xs md:text-sm font-semibold self-center text-gray-800">Serial Number: {{ bookData?.id }}</p>
+      </div>
+      <div
+        v-html="bookData?.volumeInfo.description"
+        class="text-xs md:text-sm h-44 md:h-80 overflow-auto text-justify pr-3" />
+      <div class="mb-4 md:mb-0 flex justify-between items-center">
+        <p class="text-2xl md:text-3xl font-bold text-blue-300">${{ bookData?.price }}</p>
+        <div>
+          <input
+            name="quantity"
+            v-model="quantity"
+            type="number"
+            min="1"
+            class="w-16 p-2 text-center border border-gray-500 rounded-lg bg-gray-900 mr-2"
+            placeholder="1" />
+
+          <Button
+            severity="info"
+            label="Add to cart"
+            icon-pos="right"
+            icon="pi pi-shopping-cart"
+            class="font-bold"
+            @click="addToCart" />
         </div>
       </div>
     </div>
-    <Toast position="bottom-center" group="bc" />
   </div>
 </template>
+
+<style scoped>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+</style>
