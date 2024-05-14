@@ -44,7 +44,9 @@ const addToCart = () => {
   <div class="mx-4 mb-9 md:grid md:grid-cols-2 items-center text-white">
     <div class="flex justify-center mb-4">
       <img
-        :src="bookData?.volumeInfo.imageLinks.thumbnail"
+        :src="
+          bookData?.volumeInfo.imageLinks?.thumbnail ? bookData?.volumeInfo.imageLinks?.thumbnail : '/placeholder.png'
+        "
         :alt="bookData?.volumeInfo.title"
         class="md:w-96 rounded-md shadow-xl md:shadow-2xl" />
     </div>
