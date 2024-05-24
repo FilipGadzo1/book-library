@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { BookObject } from '@/types';
 import { useVModel } from '@vueuse/core';
+
 const props = defineProps<{
   visible: boolean;
   bookData?: BookObject;

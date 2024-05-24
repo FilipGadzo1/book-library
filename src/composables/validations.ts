@@ -1,6 +1,7 @@
 export function useFormat() {
   function formatCreditCardNumber(e: Event) {
     const input = e.target as HTMLInputElement;
+
     let trimmedValue = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
 
     if (trimmedValue.length > 16) {
@@ -18,6 +19,7 @@ export function useFormat() {
 
   function formatDate(e: Event) {
     const input = e.target as HTMLInputElement;
+
     let trimmedValue = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
 
     if (trimmedValue.length > 4) {
@@ -35,6 +37,7 @@ export function useFormat() {
 
   function formatCvv(e: Event) {
     const input = e.target as HTMLInputElement;
+
     let trimmedValue = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
 
     if (trimmedValue.length > 3) {
@@ -46,6 +49,7 @@ export function useFormat() {
 
   function formatZip(e: Event) {
     const input = e.target as HTMLInputElement;
+
     let trimmedValue = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
 
     if (trimmedValue.length > 5) {

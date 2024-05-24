@@ -27,6 +27,7 @@ function addToCart() {
       detail: 'Please enter a valid quantity',
       life: 3000,
     });
+
     return;
   }
 
@@ -36,6 +37,7 @@ function addToCart() {
     detail: `Item${quantity.value > 1 ? 's' : ''} successfully added to cart`,
     life: 3000,
   });
+
   cartStore.addToCart({ ...props.bookData, quantity: quantity.value }, quantity.value);
   emit('cancel');
 }

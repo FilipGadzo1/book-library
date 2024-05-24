@@ -8,9 +8,14 @@ const props = defineProps<{
   data?: BookObject[];
 }>();
 
+defineEmits<{
+  details: [book: BookObject];
+}>();
+
 const cart = useCartStore();
 const toast = useToast();
 const format = useFormatter();
+
 const bookInfo = computed(() => {
   return props.data?.map((book) => {
     return {
@@ -31,10 +36,6 @@ function addToCart(book: BookObject) {
     life: 3000,
   });
 }
-
-defineEmits<{
-  details: [book: BookObject];
-}>();
 </script>
 
 <template>

@@ -61,11 +61,11 @@ defineExpose({ submit: onSubmit });
 
     <div class="text-white border border-gray-800 rounded-lg p-4 bg-gray-700">
       <div class="relative">
-        <CardInputForm name="cardNumber" placeholder="4242 4242 4242 4242" />
+        <FormInputField name="cardNumber" placeholder="4242 4242 4242 4242" />
       </div>
       <div class="md:flex gap-4 md:mt-4">
-        <CardDateInputForm name="expDate" placeholder="MM/YY" />
-        <CardCvvInputForm name="cvv" placeholder="CVV" />
+        <FormInputField name="expDate" placeholder="MM/YY" />
+        <FormInputField name="cvv" placeholder="CVV" />
       </div>
     </div>
   </form>

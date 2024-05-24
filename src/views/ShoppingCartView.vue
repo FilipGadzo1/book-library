@@ -12,27 +12,6 @@ import success from '@/assets/lottie/success.json';
 const cart = useCartStore();
 const toast = useToast();
 const router = useRouter();
-const screenWidth = ref(window.innerWidth);
-
-const handleResize = () => {
-  screenWidth.value = window.innerWidth;
-};
-
-onMounted(() => {
-  window.addEventListener('resize', handleResize);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize);
-});
-
-const screenSize = computed(() => {
-  if (screenWidth.value < 768) {
-    return 'vertical';
-  }
-
-  return 'horizontal';
-});
 
 const stepperPanelDesign = {
   number: {
@@ -53,14 +32,34 @@ const stepperPanelDesign = {
 };
 
 const formData = ref<FormValues>();
-
 const isSubmitting = ref(false);
+const screenWidth = ref(window.innerWidth);
+const checkoutForm = ref<InstanceType<typeof CheckoutForm> | null>(null);
+
+const screenSize = computed(() => {
+  if (screenWidth.value < 768) {
+    return 'vertical';
+  }
+
+  return 'horizontal';
+});
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
+});
+
+function handleResize() {
+  screenWidth.value = window.innerWidth;
+}
 
 function validateForm(data: FormValues, nextCallback: () => void) {
   formData.value = data;
   nextCallback();
 }
-const checkoutForm = ref<InstanceType<typeof CheckoutForm> | null>(null);
 
 function clickToCheckout() {
   checkoutForm.value?.submit();

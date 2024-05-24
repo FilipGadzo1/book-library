@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cart';
+
 const cart = useCartStore();
 const format = useFormatter();
+
+const cartItems = cart.cartList;
+const orderNumber = cart.orderNumber;
 
 const totalPrice = computed(() => {
   return format.number(cart.totalPrice, {
     style: 'currency',
   });
 });
-
-const cartItems = cart.cartList;
-
-const orderNumber = cart.orderNumber;
 </script>
 <template>
   <div class="p-4 rounded-lg border border-gray-800 bg-gray-700 text-white overflow-y">

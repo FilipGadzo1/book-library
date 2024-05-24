@@ -1,12 +1,12 @@
 <script setup lang="ts">
+const emit = defineEmits(['search']);
+
 const query = ref('');
 
 function search(e: any) {
   e.preventDefault();
   emit('search', query.value);
 }
-
-const emit = defineEmits(['search']);
 </script>
 
 <template>
@@ -32,15 +32,3 @@ const emit = defineEmits(['search']);
     </div>
   </form>
 </template>
-
-<style scoped>
-input:-webkit-autofill,
-input:-webkit-autofill:focus {
-  transition:
-    background-color 600000s 0s,
-    color 600000s 0s;
-}
-input[data-autocompleted] {
-  background-color: transparent !important;
-}
-</style>

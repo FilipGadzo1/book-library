@@ -2,8 +2,8 @@
 import { useCartStore } from '@/stores/cart';
 
 const format = useFormatter();
-
 const cart = useCartStore();
+
 const totalPrice = computed(() => {
   return format.number(cart.totalPrice, {
     style: 'currency',

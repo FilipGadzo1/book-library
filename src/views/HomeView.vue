@@ -4,7 +4,33 @@ import type { BookObject } from '@/types';
 import { Vue3Lottie } from 'vue3-lottie';
 import loading from '@/assets/lottie/loading.json';
 
-const onSearchClick = (query: string) => {
+const bookData = ref([]);
+const showScrollButton = ref(false);
+const isLoading = ref(false);
+const isDialogVisible = ref<boolean>(false);
+const bookDetails = ref<BookObject>();
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
+
+function handleScroll() {
+  if (window.scrollY > 100) {
+    showScrollButton.value = true;
+  } else {
+    showScrollButton.value = false;
+  }
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function onSearchClick(query: string) {
   let trimmedQuery = query.trim();
 
   if (trimmedQuery === '') {
@@ -12,27 +38,9 @@ const onSearchClick = (query: string) => {
   }
 
   searchBooks(trimmedQuery);
-};
+}
 
 const apiUrl = 'https://www.googleapis.com/books/v1/volumes';
-
-const bookData = ref([]);
-
-const showScrollButton = ref(false);
-
-const isLoading = ref(false);
-
-const handleScroll = () => {
-  if (window.scrollY > 100) {
-    showScrollButton.value = true;
-  } else {
-    showScrollButton.value = false;
-  }
-};
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
 
 async function searchBooks(query: string) {
   isLoading.value = true;
@@ -44,9 +52,6 @@ async function searchBooks(query: string) {
     });
 }
 
-const isDialogVisible = ref<boolean>(false);
-const bookDetails = ref<BookObject>();
-
 function onDetailClick(book: BookObject) {
   bookDetails.value = book;
   isDialogVisible.value = true;
@@ -55,14 +60,6 @@ function onDetailClick(book: BookObject) {
 function hideDialog() {
   isDialogVisible.value = false;
 }
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
 </script>
 
 <template>
