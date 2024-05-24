@@ -90,6 +90,7 @@ declare global {
   const useFormErrors: typeof import('vee-validate')['useFormErrors']
   const useFormValues: typeof import('vee-validate')['useFormValues']
   const useFormat: typeof import('./src/composables/validations')['useFormat']
+  const useFormatter: typeof import('./src/composables/formatter')['useFormatter']
   const useIsFieldDirty: typeof import('vee-validate')['useIsFieldDirty']
   const useIsFieldTouched: typeof import('vee-validate')['useIsFieldTouched']
   const useIsFieldValid: typeof import('vee-validate')['useIsFieldValid']
@@ -209,6 +210,7 @@ declare module 'vue' {
     readonly useFormErrors: UnwrapRef<typeof import('vee-validate')['useFormErrors']>
     readonly useFormValues: UnwrapRef<typeof import('vee-validate')['useFormValues']>
     readonly useFormat: UnwrapRef<typeof import('./src/composables/validations')['useFormat']>
+    readonly useFormatter: UnwrapRef<typeof import('./src/composables/formatter')['useFormatter']>
     readonly useIsFieldDirty: UnwrapRef<typeof import('vee-validate')['useIsFieldDirty']>
     readonly useIsFieldTouched: UnwrapRef<typeof import('vee-validate')['useIsFieldTouched']>
     readonly useIsFieldValid: UnwrapRef<typeof import('vee-validate')['useIsFieldValid']>
@@ -321,6 +323,7 @@ declare module '@vue/runtime-core' {
     readonly useFormErrors: UnwrapRef<typeof import('vee-validate')['useFormErrors']>
     readonly useFormValues: UnwrapRef<typeof import('vee-validate')['useFormValues']>
     readonly useFormat: UnwrapRef<typeof import('./src/composables/validations')['useFormat']>
+    readonly useFormatter: UnwrapRef<typeof import('./src/composables/formatter')['useFormatter']>
     readonly useIsFieldDirty: UnwrapRef<typeof import('vee-validate')['useIsFieldDirty']>
     readonly useIsFieldTouched: UnwrapRef<typeof import('vee-validate')['useIsFieldTouched']>
     readonly useIsFieldValid: UnwrapRef<typeof import('vee-validate')['useIsFieldValid']>

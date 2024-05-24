@@ -3,12 +3,13 @@ import type { BookObject } from '@/types';
 export const useCartStore = defineStore('cart', {
   state: () => ({
     cartList: [] as BookObject[],
+    orderNumber: 1,
   }),
 
   getters: {
     cartItemsCount: (state) => state.cartList.length,
-    getCartItems: (state) => state.cartList.map((item) => item),
-    getTotalPrice: (state) => state.cartList.reduce((acc, item) => acc + item.price * item.quantity, 0),
+    cartItems: (state) => state.cartList.map((item) => item),
+    totalPrice: (state) => state.cartList.reduce((acc, item) => acc + item.price * item.quantity, 0),
   },
 
   actions: {
@@ -41,6 +42,7 @@ export const useCartStore = defineStore('cart', {
     },
     removeAllItemsFromCart() {
       this.cartList = [];
+      this.orderNumber += 1;
     },
   },
   persist: true,

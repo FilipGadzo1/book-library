@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const query = ref('');
 
-const search = (e: any) => {
+function search(e: any) {
   e.preventDefault();
   emit('search', query.value);
-};
+}
 
 const emit = defineEmits(['search']);
 </script>

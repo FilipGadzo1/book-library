@@ -10,7 +10,7 @@ const props = defineProps<{
 
 const cart = useCartStore();
 const toast = useToast();
-
+const format = useFormatter();
 const bookInfo = computed(() => {
   return props.data?.map((book) => {
     return {
@@ -42,7 +42,7 @@ defineEmits<{
     <div
       v-for="(book, index) in bookInfo"
       :key="index"
-      class="grid grid-cols-4 bg-gray-900 rounded-lg shadow text-white transition-colors">
+      class="grid grid-cols-4 bg-gray-900 rounded-lg shadow text-white">
       <img
         :src="book.imageLinks ? book.imageLinks.thumbnail : '/placeholder.png'"
         :alt="book.title"
@@ -53,10 +53,10 @@ defineEmits<{
           <p v-if="book.authors" class="text-gray-400 italic text-sm">Authors: {{ book.authors.join(', ') }}</p>
         </div>
         <div class="flex items-center justify-between">
-          <p class="text-lg md:text-2xl font-bold">${{ book.price }}</p>
+          <p class="text-lg md:text-2xl font-bold">{{ format.number(book.price, { style: 'currency' }) }}</p>
           <div class="flex">
             <Button
-              label="Add to the cart"
+              label="Add"
               rounded
               text
               icon="pi pi-shopping-cart"

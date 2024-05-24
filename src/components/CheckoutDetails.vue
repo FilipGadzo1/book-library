@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cart';
 const cart = useCartStore();
+const format = useFormatter();
+
+const totalPrice = computed(() => {
+  return format.number(cart.totalPrice, {
+    style: 'currency',
+  });
+});
+
 const cartItems = cart.cartList;
-const toatlPrice = cart.getTotalPrice;
+
+const orderNumber = cart.orderNumber;
 </script>
 <template>
   <div class="p-4 rounded-lg border border-gray-800 bg-gray-700 text-white overflow-y">
@@ -12,13 +21,17 @@ const toatlPrice = cart.getTotalPrice;
         <div class="text-sm flex flex-col">
           <span>{{ item.volumeInfo.title }} ({{ item.quantity }})</span>
           <span>{{ item.volumeInfo.authors?.join(', ') }} </span>
-          <span class="mt-5 font-semibold">Price: ${{ item.price }}</span>
+          <span class="mt-5 font-semibold">Price: {{ format.number(item.price, { style: 'currency' }) }}</span>
         </div>
       </div>
     </div>
-    <div class="flex justify-between mt-4 border-y border-gray-800 py-4">
+    <div class="flex justify-between mt-4 mb-4 border-y border-gray-800 py-4">
       <span class="font-semibold">Total</span>
-      <span>${{ toatlPrice }}</span>
+      <span>{{ totalPrice }}</span>
+    </div>
+    <div class="flex justify-between">
+      <span class="font-semibold">Order Number:</span>
+      <span>{{ orderNumber }}</span>
     </div>
   </div>
 </template>

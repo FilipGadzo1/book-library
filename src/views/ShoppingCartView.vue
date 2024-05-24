@@ -11,7 +11,7 @@ import success from '@/assets/lottie/success.json';
 
 const cart = useCartStore();
 const toast = useToast();
-
+const router = useRouter();
 const screenWidth = ref(window.innerWidth);
 
 const handleResize = () => {
@@ -30,6 +30,7 @@ const screenSize = computed(() => {
   if (screenWidth.value < 768) {
     return 'vertical';
   }
+
   return 'horizontal';
 });
 
@@ -67,6 +68,7 @@ function clickToCheckout() {
 
 function onSubmit() {
   isSubmitting.value = true;
+
   const template = {
     firstName: formData.value?.firstName,
     lastName: formData.value?.lastName,
@@ -74,8 +76,10 @@ function onSubmit() {
     address: formData.value?.address,
     city: formData.value?.city,
     zip: formData.value?.zip,
-    price: cart.getTotalPrice,
+    price: cart.totalPrice,
+    orderNumber: cart.orderNumber,
   };
+
   emailjs
     .send('service_c1zjkzr', 'template_rqvh9rf', template, {
       publicKey: 'user_AxAtucXpLtym8PVqPywlf',
@@ -126,6 +130,12 @@ function onSubmit() {
       </button>
     </div>
     <div v-else>
+      <Button
+        label="Back home"
+        size="small"
+        icon="pi pi-arrow-left"
+        class="text-xs ml-10"
+        @click="() => router.push('/')" />
       <Stepper
         linear
         :orientation="screenSize"
@@ -175,11 +185,17 @@ function onSubmit() {
           </template>
         </StepperPanel>
         <StepperPanel header="Confirmation" :pt="stepperPanelDesign">
-          <template #content="">
+          <template #content="{ prevCallback }">
             <div class="md:w-1/3 md:mx-auto">
               <CheckoutDetails />
             </div>
-            <div class="flex mt-2 justify-end">
+            <div class="flex mt-2 justify-between">
+              <Button
+                label="Back"
+                severity="secondary"
+                icon="pi pi-arrow-left"
+                class="text-xs md:text-lg"
+                @click="prevCallback" />
               <Button label="Submit" icon="pi pi-check" iconPos="right" class="text-xs md:text-lg" @click="onSubmit" />
             </div>
           </template>

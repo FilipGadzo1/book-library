@@ -27,9 +27,9 @@ const { handleSubmit } = useForm<FormValues>({
       address: z.string().min(1, "Address can't be empty"),
       city: z.string().min(1, "City can't be empty"),
       zip: z.string().min(1, "Zip can't be empty").max(5, 'Zip code must be 5 digits'),
-      cardNumber: z.string().min(1, "Card number can't be empty"),
-      expDate: z.string().min(1, "Expiration date can't be empty"),
-      cvv: z.string().min(1, "CVV can't be empty"),
+      cardNumber: z.string().min(1, "Card number can't be empty").length(19, 'Card number must be 16 digits '),
+      expDate: z.string().min(1, "Expiration date can't be empty").length(5, 'Expiration date must be in MM/YY format'),
+      cvv: z.string().min(1, "CVV can't be empty").length(3, 'CVV must be 3 digits'),
     })
   ),
 });
