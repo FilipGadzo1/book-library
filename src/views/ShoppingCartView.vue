@@ -185,7 +185,8 @@ function onSubmit() {
         </StepperPanel>
         <StepperPanel header="Confirmation" :pt="stepperPanelDesign">
           <template #content="{ prevCallback }">
-            <div class="md:w-1/3 md:mx-auto">
+            <div class="md:w-1/2 md:mx-auto grid grid-cols-2 gap-4">
+              <ShippingDetails />
               <CheckoutDetails />
             </div>
             <div class="flex mt-2 justify-between">

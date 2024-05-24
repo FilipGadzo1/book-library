@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useCartStore } from '@/stores/cart';
 import type { FormValues } from '@/types/book';
 import { toTypedSchema } from '@vee-validate/zod';
 import { z } from 'zod';
@@ -6,6 +7,8 @@ import { z } from 'zod';
 const emit = defineEmits<{
   submit: [values: FormValues, evt?: Event];
 }>();
+
+const cart = useCartStore();
 
 const { handleSubmit } = useForm<FormValues>({
   initialValues: {
@@ -35,6 +38,7 @@ const { handleSubmit } = useForm<FormValues>({
 });
 
 const onSubmit = handleSubmit((values, ctx) => {
+  cart.setShippingInfo(values);
   emit('submit', values, ctx.evt);
 });
 

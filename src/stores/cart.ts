@@ -1,9 +1,10 @@
-import type { BookObject } from '@/types';
+import type { BookObject, FormValues } from '@/types';
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
     cartList: [] as BookObject[],
     orderNumber: 1,
+    shippingInfo: {} as FormValues,
   }),
 
   getters: {
@@ -43,6 +44,9 @@ export const useCartStore = defineStore('cart', {
     removeAllItemsFromCart() {
       this.cartList = [];
       this.orderNumber += 1;
+    },
+    setShippingInfo(info: FormValues) {
+      this.shippingInfo = info;
     },
   },
   persist: true,
