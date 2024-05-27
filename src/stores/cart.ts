@@ -14,28 +14,32 @@ export const useCartStore = defineStore('cart', {
   },
 
   actions: {
+    findItem(id: string) {
+      return this.cartList.find((item) => item.id === id);
+    },
     addToCart(book: BookObject, quantity: number) {
-      const index = this.cartList.findIndex((item) => item.id === book.id);
-      if (index !== -1) {
-        this.cartList[index].quantity += quantity;
+      const item = this.findItem(book.id);
+      if (item) {
+        item.quantity += quantity;
       } else {
         if (!book.quantity) book.quantity = 1;
+
         this.cartList.push(book);
       }
     },
     incrementQuantity(book: BookObject) {
-      const index = this.cartList.findIndex((item) => item.id === book.id);
-      if (index !== -1) {
-        this.cartList[index].quantity++;
+      const item = this.findItem(book.id);
+      if (item) {
+        item.quantity++;
       }
     },
     decrementQuantity(book: BookObject) {
-      const index = this.cartList.findIndex((item) => item.id === book.id);
-      if (index !== -1) {
-        this.cartList[index].quantity--;
-      }
-      if (this.cartList[index].quantity <= 0) {
-        this.removeFromCart(book);
+      const item = this.findItem(book.id);
+      if (item) {
+        item.quantity--;
+        if (item.quantity <= 0) {
+          this.removeFromCart(book);
+        }
       }
     },
     removeFromCart(book: BookObject) {

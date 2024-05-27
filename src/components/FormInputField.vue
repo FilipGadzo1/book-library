@@ -6,28 +6,16 @@ const props = defineProps<{
   placeholder?: string;
 }>();
 
-const { formatZip, formatCreditCardNumber, formatCvv, formatDate } = useFormat();
+const emit = defineEmits<{
+  input: [value: Event];
+}>();
 
-const { value, setValue } = useField(() => props.name);
-
-function format(name: string, e: Event) {
-  if (name === 'zip') {
-    return setValue(formatZip(e), true);
-  } else if (name === 'cardNumber') {
-    return setValue(formatCreditCardNumber(e), true);
-  } else if (name === 'expDate') {
-    return setValue(formatDate(e), true);
-  } else if (name === 'cvv') {
-    return setValue(formatCvv(e), true);
-  } else {
-    return undefined;
-  }
-}
+const { value } = useField(() => props.name);
 </script>
 
 <template>
   <div class="w-full">
-    <input type="text" :name="name" v-model="value" :placeholder="placeholder" @input="(e) => format(name, e)" />
+    <input type="text" :name="name" v-model="value" :placeholder="placeholder" @input="emit('input', $event)" />
     <div class="min-h-[20px]">
       <ErrorMessage :name="name" class="text-red-500 text-xs" />
     </div>

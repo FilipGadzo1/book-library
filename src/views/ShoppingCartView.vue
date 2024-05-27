@@ -1,18 +1,21 @@
 <script setup lang="ts">
 import type CheckoutForm from '@/components/CheckoutForm.vue';
 import { useCartStore } from '@/stores/cart';
-import { useToast } from 'primevue/usetoast';
-import emailjs from '@emailjs/browser';
-import type { FormValues } from '@/types/book';
+import type { EmailTemplate, FormValues } from '@/types/book';
 import Stepper from 'primevue/stepper';
 import StepperPanel from 'primevue/stepperpanel';
 import { Vue3Lottie } from 'vue3-lottie';
 import success from '@/assets/lottie/success.json';
+import { useWindowSize } from '@vueuse/core';
+import { EmailService } from '@/email.service';
+import { useToast } from 'primevue/usetoast';
 
+const { width } = useWindowSize();
 const cart = useCartStore();
-const toast = useToast();
 const router = useRouter();
+const toast = useToast();
 
+const iPadSize = 768;
 const stepperPanelDesign = {
   number: {
     class: 'bg-gray-600',
@@ -33,28 +36,15 @@ const stepperPanelDesign = {
 
 const formData = ref<FormValues>();
 const isSubmitting = ref(false);
-const screenWidth = ref(window.innerWidth);
 const checkoutForm = ref<InstanceType<typeof CheckoutForm> | null>(null);
 
 const screenSize = computed(() => {
-  if (screenWidth.value < 768) {
+  if (width.value < iPadSize) {
     return 'vertical';
   }
 
   return 'horizontal';
 });
-
-onMounted(() => {
-  window.addEventListener('resize', handleResize);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('resize', handleResize);
-});
-
-function handleResize() {
-  screenWidth.value = window.innerWidth;
-}
 
 function validateForm(data: FormValues, nextCallback: () => void) {
   formData.value = data;
@@ -65,10 +55,16 @@ function clickToCheckout() {
   checkoutForm.value?.submit();
 }
 
-function onSubmit() {
+const emailService = new EmailService(
+  import.meta.env.VITE_EMAIL_SERVICE_ID,
+  import.meta.env.VITE_EMAIL_TEMPLATE_ID,
+  import.meta.env.VITE_EMAIL_USER_ID
+);
+
+async function onSubmit() {
   isSubmitting.value = true;
 
-  const template = {
+  const template: EmailTemplate = {
     firstName: formData.value?.firstName,
     lastName: formData.value?.lastName,
     email: formData.value?.email,
@@ -78,33 +74,25 @@ function onSubmit() {
     price: cart.totalPrice,
     orderNumber: cart.orderNumber,
   };
-
-  emailjs
-    .send('service_c1zjkzr', 'template_rqvh9rf', template, {
-      publicKey: 'user_AxAtucXpLtym8PVqPywlf',
-    })
-    .then(
-      () => {
-        toast.add({
-          severity: 'success',
-          summary: 'Success Message',
-          detail: `Book${cart.cartItemsCount > 1 ? 's' : ''} successfully purchased. Email confirmation will be sent to ${template.email}`,
-          life: 3000,
-        });
-        cart.removeAllItemsFromCart();
-      },
-      (error) => {
-        toast.add({
-          severity: 'error',
-          summary: 'Error Message',
-          detail: `${error.text || 'An error occurred'}`,
-          life: 3000,
-        });
-      }
-    )
-    .finally(() => {
-      isSubmitting.value = false;
+  try {
+    await emailService.sendEmail(template);
+    cart.removeAllItemsFromCart();
+    toast.add({
+      severity: 'success',
+      summary: 'Success Message',
+      detail: `Book${cart.cartItemsCount > 1 ? 's' : ''} successfully purchased. Email confirmation will be sent to ${template.email}`,
+      life: 3000,
     });
+  } catch (error: any) {
+    toast.add({
+      severity: 'error',
+      summary: 'Error Message',
+      detail: `${error.text || 'An error occurred'}`,
+      life: 3000,
+    });
+  } finally {
+    isSubmitting.value = false;
+  }
 }
 </script>
 
@@ -120,13 +108,8 @@ function onSubmit() {
       :autoPlay="true" />
   </div>
   <div v-else class="m-8">
-    <div v-if="!cart.cartItemsCount" class="text-center text-white">
-      <img src="/empty-cart.webp" alt="Empty Cart" class="mx-auto w-44" />
-      <p class="text-xl font-semibold mb-2">Your cart is empty</p>
-      <p>Looks like you haven't added anything to your cart.</p>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg m-4">
-        <router-link to="/">Explore books</router-link>
-      </button>
+    <div v-if="!cart.cartItemsCount">
+      <EmptyPage />
     </div>
     <div v-else>
       <Button

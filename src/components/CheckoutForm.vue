@@ -59,17 +59,17 @@ defineExpose({ submit: onSubmit });
       <FormInputField name="address" placeholder="Address" />
       <div class="md:flex gap-4 md:mt-4">
         <FormInputField name="city" placeholder="City" />
-        <FormInputField name="zip" placeholder="Zip" />
+        <ZipInput />
       </div>
     </div>
 
     <div class="text-white border border-gray-800 rounded-lg p-4 bg-gray-700">
       <div class="relative">
-        <FormInputField name="cardNumber" placeholder="4242 4242 4242 4242" />
+        <CardNumberInput />
       </div>
       <div class="md:flex gap-4 md:mt-4">
-        <FormInputField name="expDate" placeholder="MM/YY" />
-        <FormInputField name="cvv" placeholder="CVV" />
+        <FormatDateInput />
+        <CvvInput />
       </div>
     </div>
   </form>

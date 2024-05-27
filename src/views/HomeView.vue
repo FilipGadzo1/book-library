@@ -3,32 +3,17 @@ import BookGrid from '@/components/BookGrid.vue';
 import type { BookObject } from '@/types';
 import { Vue3Lottie } from 'vue3-lottie';
 import loading from '@/assets/lottie/loading.json';
+import { useWindowScroll } from '@vueuse/core';
+import { service } from '@/service';
 
-const bookData = ref([]);
-const showScrollButton = ref(false);
+const { y } = useWindowScroll({ behavior: 'smooth' });
+
+const bookData = ref<BookObject[]>();
 const isLoading = ref(false);
 const isDialogVisible = ref<boolean>(false);
 const bookDetails = ref<BookObject>();
 
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll);
-});
-
-function handleScroll() {
-  if (window.scrollY > 100) {
-    showScrollButton.value = true;
-  } else {
-    showScrollButton.value = false;
-  }
-}
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+const showScrollButton = computed(() => y.value > 100);
 
 function onSearchClick(query: string) {
   let trimmedQuery = query.trim();
@@ -40,16 +25,11 @@ function onSearchClick(query: string) {
   searchBooks(trimmedQuery);
 }
 
-const apiUrl = 'https://www.googleapis.com/books/v1/volumes';
-
 async function searchBooks(query: string) {
   isLoading.value = true;
-  await fetch(`${apiUrl}?q=${query}&maxResults=40`)
-    .then((res) => res.json())
-    .then((data) => {
-      isLoading.value = false;
-      bookData.value = data.items;
-    });
+  const data = await service.getBooks(query);
+  bookData.value = data.items;
+  isLoading.value = false;
 }
 
 function onDetailClick(book: BookObject) {
@@ -65,7 +45,7 @@ function hideDialog() {
 <template>
   <SearchBar @search="onSearchClick" />
 
-  <div v-if="!bookData.length">
+  <div v-if="!bookData?.length">
     <div v-if="isLoading">
       <Vue3Lottie
         class="mx-auto"
@@ -77,18 +57,14 @@ function hideDialog() {
         :autoPlay="true" />
     </div>
     <div v-else>
-      <img src="/empty-book.svg" alt="Empty Search" class="mx-auto mt-10 w-48" />
-      <p class="text-center text-white text-xl font-semibold mb-2">
-        Start searching for books
-        <i class="pi pi-arrow-up animate-bounce p-2" />
-      </p>
+      <EmptySearchState />
     </div>
   </div>
   <div v-else>
     <BookGrid :data="bookData" @details="onDetailClick" />
     <Button
       v-if="showScrollButton"
-      @click="scrollToTop"
+      @click="y = 0"
       icon="pi pi-arrow-up"
       rounded
       severity="info"

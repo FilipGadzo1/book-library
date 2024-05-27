@@ -8,13 +8,19 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Badge: typeof import('primevue/badge')['default']
+    BookCard: typeof import('./components/BookCard.vue')['default']
     BookDetail: typeof import('./components/BookDetail.vue')['default']
     BookDetailDialog: typeof import('./components/BookDetailDialog.vue')['default']
     BookGrid: typeof import('./components/BookGrid.vue')['default']
     Button: typeof import('primevue/button')['default']
+    CardNumberInput: typeof import('./components/CardNumberInput.vue')['default']
     CheckoutDetails: typeof import('./components/CheckoutDetails.vue')['default']
     CheckoutForm: typeof import('./components/CheckoutForm.vue')['default']
+    CvvInput: typeof import('./components/CvvInput.vue')['default']
     Dialog: typeof import('primevue/dialog')['default']
+    EmptyPage: typeof import('./components/EmptyPage.vue')['default']
+    EmptySearchState: typeof import('./components/EmptySearchState.vue')['default']
+    FormatDateInput: typeof import('./components/FormatDateInput.vue')['default']
     FormInputField: typeof import('./components/FormInputField.vue')['default']
     NavigationBar: typeof import('./components/NavigationBar.vue')['default']
     PageNotFound: typeof import('./components/PageNotFound.vue')['default']
@@ -23,6 +29,9 @@ declare module 'vue' {
     SearchBar: typeof import('./components/SearchBar.vue')['default']
     ShippingDetails: typeof import('./components/ShippingDetails.vue')['default']
     ShoppingCart: typeof import('./components/ShoppingCart.vue')['default']
+    ShoppingCartCard: typeof import('./components/ShoppingCartCard.vue')['default']
+    ShoppingCartStepper: typeof import('./components/ShoppingCartStepper.vue')['default']
     StarRating: typeof import('./components/StarRating.vue')['default']
+    ZipInput: typeof import('./components/ZipInput.vue')['default']
   }
 }

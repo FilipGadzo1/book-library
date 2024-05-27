@@ -1,3 +1,9 @@
+export interface BookResponse {
+  items: BookObject[];
+  kind: string;
+  totalItems: number;
+}
+
 export interface BookObject {
   id: string;
   volumeInfo: VolumeInfo;
@@ -34,3 +40,14 @@ export interface FormValues {
   expDate: string;
   cvv: string;
 }
+
+export type EmailTemplate = {
+  firstName: string | undefined;
+  lastName: string | undefined;
+  email: string | undefined;
+  address: string | undefined;
+  city: string | undefined;
+  zip: string | undefined;
+  price: number;
+  orderNumber: number;
+};

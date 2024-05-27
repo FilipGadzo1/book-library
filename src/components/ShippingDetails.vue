@@ -15,6 +15,5 @@ const cart = useCartStore();
     <div class="text-bold text-xl mb-4 mt-4">Billing information</div>
     <div class="flex gap-4">Card Number: {{ cart.shippingInfo.cardNumber }}</div>
     <div class="flex gap-4">Expiration Date: {{ cart.shippingInfo.expDate }}</div>
-    <div class="flex gap-4">CVV: ***</div>
   </div>
 </template>
