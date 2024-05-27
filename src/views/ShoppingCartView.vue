@@ -126,7 +126,7 @@ async function onSubmit() {
             class: 'bg-gray-600 ',
           },
           nav: {
-            class: ' mx-8',
+            class: 'md:mx-8',
           },
         }">
         <StepperPanel header="Shopping Cart" :pt="stepperPanelDesign">
@@ -168,7 +168,7 @@ async function onSubmit() {
         </StepperPanel>
         <StepperPanel header="Confirmation" :pt="stepperPanelDesign">
           <template #content="{ prevCallback }">
-            <div class="md:w-1/2 md:mx-auto grid grid-cols-2 gap-4">
+            <div class="md:w-1/2 md:mx-auto md:grid md:grid-cols-2 md:gap-4 flex flex-col gap-4">
               <ShippingDetails />
               <CheckoutDetails />
             </div>
