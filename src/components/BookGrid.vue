@@ -9,16 +9,20 @@ defineEmits<{
   details: [book: BookObject];
 }>();
 
-const bookInfo: BookObject[] =
-  props.data?.map((book) => {
-    return {
-      volumeInfo: book.volumeInfo,
-      id: book.id,
-      price: Math.floor(Math.random() * 100) + 1,
-      rating: Math.floor(Math.random() * 5) + 1,
-      quantity: 0,
-    };
-  }) || [];
+const bookInfo = computed<BookObject[]>(
+  () =>
+    props.data?.map((book) => {
+      return {
+        volumeInfo: {
+          ...book.volumeInfo,
+          rating: Math.floor(Math.random() * 5) + 1,
+        },
+        id: book.id,
+        price: Math.floor(Math.random() * 100) + 1,
+        quantity: 0,
+      };
+    }) || []
+);
 </script>
 
 <template>
