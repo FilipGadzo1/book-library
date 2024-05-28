@@ -28,7 +28,7 @@ const bookInfo = computed<BookObject[]>(
 <template>
   <div class="grid md:grid-cols-2 lg:grid-cols-3 m-4 gap-4">
     <div v-for="(book, index) in bookInfo" :key="index">
-      <BookCard :book="book" @details="($event) => $emit('details', $event)" />
+      <BookCard :book="book" @details="(e) => $emit('details', e)" />
     </div>
   </div>
 </template>
